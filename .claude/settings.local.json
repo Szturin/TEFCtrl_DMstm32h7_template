@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(diff:*)",
+      "Bash(\"S:\\\\My_software\\\\CLion 2025.1.1\\\\bin\\\\cmake\\\\win\\\\x64\\\\bin\\\\cmake.exe\" --build cmake-build-debug --target CtrBoard-H7_ALL.elf -j 14)",
+      "Bash(ninja -t targets:*)"
+    ]
+  }
+}
