@@ -1,8 +1,16 @@
-#${templateWarning}
+# ==============================================================================
+# STM32 + RT-Thread + CMSIS-DSP CMake 配置模板
+# 本模板总结了 STM32H7 项目的关键配置规范和最佳实践
+# ==============================================================================
+
+${templateWarning}
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_VERSION 1)
 ${cmakeRequiredVersion}
-# specify cross-compilers and tools
+
+# ------------------------------------------------------------------------------
+# 1. 交叉编译工具链配置
+# ------------------------------------------------------------------------------
 set(CMAKE_C_COMPILER arm-none-eabi-gcc)
 set(CMAKE_CXX_COMPILER arm-none-eabi-g++)
 set(CMAKE_ASM_COMPILER  arm-none-eabi-gcc)
@@ -12,36 +20,56 @@ set(CMAKE_OBJDUMP arm-none-eabi-objdump)
 set(SIZE arm-none-eabi-size)
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
-# project settings
+# ------------------------------------------------------------------------------
+# 2. 项目配置
+# ------------------------------------------------------------------------------
 project(${projectName} C CXX ASM)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 11)
 
-#Uncomment for hardware floating point
-#add_compile_definitions(ARM_MATH_CM4;ARM_MATH_MATRIX_CHECK;ARM_MATH_ROUNDING)
-#add_compile_options(-mfloat-abi=hard -mfpu=fpv4-sp-d16)
-#add_link_options(-mfloat-abi=hard -mfpu=fpv4-sp-d16)
+# ------------------------------------------------------------------------------
+# 3. 硬件浮点配置（关键：必须与 MCU FPU 型号匹配）
+# ------------------------------------------------------------------------------
+# STM32F4/F7 Cortex-M4/M7 单精度FPU: -mfpu=fpv4-sp-d16 或 fpv5-sp-d16
+# STM32H7 Cortex-M7 双精度FPU: -mfpu=fpv5-d16
+#
+# 注意：编译选项和链接选项必须一致，且需要定义对应的 ARM_MATH_CMx 宏
 
-#Uncomment for software floating point
+# 示例：STM32H7 双精度FPU 配置（默认启用）
+add_compile_options(-mfloat-abi=hard -mfpu=fpv5-d16)
+add_link_options(-mfloat-abi=hard -mfpu=fpv5-d16)
+add_compile_definitions(ARM_MATH_CM7;ARM_MATH_MATRIX_CHECK;ARM_MATH_ROUNDING)
+
+# 如使用其他MCU，请根据以下规则调整：
+# - STM32F407: -mfpu=fpv4-sp-d16 + ARM_MATH_CM4
+# - STM32F767: -mfpu=fpv5-sp-d16 + ARM_MATH_CM7
+# - STM32H723: -mfpu=fpv5-d16 + ARM_MATH_CM7（双精度）
+
+# 软浮点配置（不推荐，性能较差）
 #add_compile_options(-mfloat-abi=soft)
 
+# ------------------------------------------------------------------------------
+# 4. 编译器通用选项
+# ------------------------------------------------------------------------------
 add_compile_options(-mcpu=${mcpu} -mthumb -mthumb-interwork)
 add_compile_options(-ffunction-sections -fdata-sections -fno-common -fmessage-length=0)
 
+# C++17 警告抑制（可选）
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-register")
 
-# uncomment to mitigate c++17 absolute addresses warnings
-#set(CMAKE_CXX_FLAGS "$${CMAKE_CXX_FLAGS} -Wno-register")
-
-# Enable assembler files preprocessing
+# 汇编文件预处理支持
 add_compile_options($<$<COMPILE_LANGUAGE:ASM>:-x$<SEMICOLON>assembler-with-cpp>)
 
-if ("$${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+# ------------------------------------------------------------------------------
+# 5. 优化级别配置
+# ------------------------------------------------------------------------------
+if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
     message(STATUS "Maximum optimization for speed")
     add_compile_options(-Ofast)
-elseif ("$${CMAKE_BUILD_TYPE}" STREQUAL "RelWithDebInfo")
+elseif ("${CMAKE_BUILD_TYPE}" STREQUAL "RelWithDebInfo")
     message(STATUS "Maximum optimization for speed, debug info included")
     add_compile_options(-Ofast -g)
-elseif ("$${CMAKE_BUILD_TYPE}" STREQUAL "MinSizeRel")
+elseif ("${CMAKE_BUILD_TYPE}" STREQUAL "MinSizeRel")
     message(STATUS "Maximum optimization for size")
     add_compile_options(-Os)
 else ()
@@ -49,41 +77,147 @@ else ()
     add_compile_options(-Og -g)
 endif ()
 
-# CLion 会填充 ${includes}，我们手动追加 Application 相关路径
+# ------------------------------------------------------------------------------
+# 6. 头文件包含路径（关键：CMSIS-DSP 路径）
+# ------------------------------------------------------------------------------
+# 注意：CMSIS-DSP 头文件路径必须指向 DSP/Include，不是 DSP/Source
+# 正确：Middlewares/ST/ARM/DSP/Include
+# 错误：Middlewares/ST/ARM/DSP/
 include_directories(${includes}
         Application
         Application/bsp
         Application/bsp/include
         Application/app
         Application/task
+        # 如果使用 CMSIS-DSP，确保包含以下路径：
+        # Middlewares/ST/ARM/DSP/Include
 )
 
+# ------------------------------------------------------------------------------
+# 7. 宏定义
+# ------------------------------------------------------------------------------
 add_definitions(${defines})
 
-# 确保包含 USB_DEVICE 目录
+# ------------------------------------------------------------------------------
+# 8. 源文件收集（关键：避免重复编译和遗漏启动文件）
+# ------------------------------------------------------------------------------
+# 8.1 基础源文件（必须包含 .s 启动文件）
 file(GLOB_RECURSE SOURCES
-        "Core/*.*"
-        "Drivers/*.*"
-        "Application/*.*"
-        "USB_DEVICE/*.*"   # <--- 必须有这一行
-        "Middlewares/*.*"
-        "RT-Thread/*.*"
+        "Core/*.c"
+        "Core/*.cpp"
+        "Core/*.s"          # 关键：包含启动汇编文件（提供 Reset_Handler）
+        "Drivers/*.c"
+        "Application/*.c"
+        "Application/*.cpp"
+        "USB_DEVICE/*.c"
+        "RT-Thread/*.c"
 )
-# 剔除 main.c
+
+# 8.2 CMSIS-DSP 库源文件（关键：只编译汇总文件）
+# CMSIS-DSP 使用汇总文件架构：*Functions.c 已经 #include 了所有子文件
+# 切勿使用 GLOB 编译 DSP/Source/**/*.c，会导致 "multiple definition" 错误
+set(DSP_SOURCES
+    "Middlewares/ST/ARM/DSP/Source/MatrixFunctions/MatrixFunctions.c"
+    "Middlewares/ST/ARM/DSP/Source/BasicMathFunctions/BasicMathFunctions.c"
+    "Middlewares/ST/ARM/DSP/Source/FastMathFunctions/FastMathFunctions.c"
+    "Middlewares/ST/ARM/DSP/Source/CommonTables/CommonTables.c"
+    "Middlewares/ST/ARM/DSP/Source/SupportFunctions/SupportFunctions.c"
+    # 根据需要添加其他模块
+)
+list(APPEND SOURCES ${DSP_SOURCES})
+
+# 8.3 USB Device 中间件
+file(GLOB_RECURSE USB_MIDDLEWARE_SOURCES "Middlewares/ST/STM32_USB_Device_Library/**/*.c")
+list(APPEND SOURCES ${USB_MIDDLEWARE_SOURCES})
+
+# 8.4 RT-Thread 源文件
+file(GLOB_RECURSE RT_THREAD_SOURCES "Middlewares/Third_Party/RealThread_RTOS_RT-Thread/*.c")
+list(APPEND SOURCES ${RT_THREAD_SOURCES})
+
+# 8.5 排除不需要的文件（例如：使用 main.cpp 时排除 main.c）
 list(REMOVE_ITEM SOURCES "${CMAKE_SOURCE_DIR}/Core/Src/main.c")
-set(LINKER_SCRIPT $${CMAKE_SOURCE_DIR}/${linkerScript})
 
-add_link_options(-Wl,-gc-sections,--print-memory-usage,-Map=$${PROJECT_BINARY_DIR}/$${PROJECT_NAME}.map)
+# ------------------------------------------------------------------------------
+# 9. 链接脚本和链接选项
+# ------------------------------------------------------------------------------
+set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/${linkerScript})
+
+add_link_options(-Wl,-gc-sections,--print-memory-usage,-Map=${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map)
 add_link_options(-mcpu=${mcpu} -mthumb -mthumb-interwork)
-add_link_options(-T $${LINKER_SCRIPT})
+add_link_options(-T ${LINKER_SCRIPT})
 
-add_executable($${PROJECT_NAME}.elf $${SOURCES} $${LINKER_SCRIPT})
+# ------------------------------------------------------------------------------
+# 10. 生成可执行文件
+# ------------------------------------------------------------------------------
+add_executable(${PROJECT_NAME}.elf ${SOURCES} ${LINKER_SCRIPT})
 
-set(HEX_FILE $${PROJECT_BINARY_DIR}/$${PROJECT_NAME}.hex)
-set(BIN_FILE $${PROJECT_BINARY_DIR}/$${PROJECT_NAME}.bin)
+# ------------------------------------------------------------------------------
+# 11. 链接库（关键：数学库必须链接）
+# ------------------------------------------------------------------------------
+# 使用 --start-group/--end-group 解决循环依赖
+# m: 数学库（提供 sqrtf, sinf, cosf, atan2f 等标准函数）
+# c: C 标准库
+target_link_libraries(${PROJECT_NAME}.elf -Wl,--start-group m c -Wl,--end-group)
 
-add_custom_command(TARGET $${PROJECT_NAME}.elf POST_BUILD
-        COMMAND $${CMAKE_OBJCOPY} -Oihex $<TARGET_FILE:$${PROJECT_NAME}.elf> $${HEX_FILE}
-        COMMAND $${CMAKE_OBJCOPY} -Obinary $<TARGET_FILE:$${PROJECT_NAME}.elf> $${BIN_FILE}
-        COMMENT "Building $${HEX_FILE}
-Building $${BIN_FILE}")
+# 如果使用预编译的 CMSIS-DSP 静态库（一般不需要，源码编译即可）：
+# link_directories(Middlewares/ST/ARM/DSP/Lib/GCC)
+# target_link_libraries(${PROJECT_NAME}.elf arm_cortexM7l_math)
+
+# ------------------------------------------------------------------------------
+# 12. 后处理：生成 HEX 和 BIN 文件
+# ------------------------------------------------------------------------------
+set(HEX_FILE ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.hex)
+set(BIN_FILE ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.bin)
+
+add_custom_command(TARGET ${PROJECT_NAME}.elf POST_BUILD
+        COMMAND ${CMAKE_OBJCOPY} -Oihex $<TARGET_FILE:${PROJECT_NAME}.elf> ${HEX_FILE}
+        COMMAND ${CMAKE_OBJCOPY} -Obinary $<TARGET_FILE:${PROJECT_NAME}.elf> ${BIN_FILE}
+        COMMENT "Building ${HEX_FILE}\nBuilding ${BIN_FILE}")
+
+# ==============================================================================
+# 常见问题排查指南
+# ==============================================================================
+#
+# Q1: arm_math.h 找不到
+# A1: 检查 include_directories 是否包含 Middlewares/ST/ARM/DSP/Include
+#
+# Q2: multiple definition of 'arm_mat_xxx'
+# A2: 检查是否误用 GLOB 编译了 DSP/Source/**/*.c，应只编译汇总文件
+#
+# Q3: cannot find entry symbol Reset_Handler
+# A3: 检查 GLOB_RECURSE 是否包含 "Core/*.s" 启动汇编文件
+#
+# Q4: undefined reference to '__sqrtf' 或 'sqrtf'
+# A4: 检查是否链接了数学库，添加 target_link_libraries(...elf m)
+#
+# Q5: FLASH 占用率异常低 (<10%)
+# A5: 启动文件未编译，检查 GLOB 是否包含 "*.s" 文件
+#
+# Q6: undefined reference to 'USBD_xxx'
+# A6: USB Device 库未编译，添加 USB_MIDDLEWARE_SOURCES
+#
+# Q7: 标准库函数（atan2f/sqrtf）vs CMSIS-DSP（arm_atan2_f32）
+# A7: 优先使用标准库函数，硬浮点模式下性能相同且兼容性更好
+#     CMSIS-DSP 主要用于矩阵运算、滤波器、FFT 等专用算法
+#
+# Q8: C/C++ 混编链接错误
+# A8: C 头文件必须用 extern "C" {} 包裹，示例：
+#     #ifdef __cplusplus
+#     extern "C" {
+#     #endif
+#     /* C 声明 */
+#     #ifdef __cplusplus
+#     }
+#     #endif
+#
+# ==============================================================================
+# 配置规范总结
+# ==============================================================================
+# ✅ 头文件路径：DSP/Include（不是 DSP/Source）
+# ✅ DSP 源文件：只编译汇总文件 *Functions.c
+# ✅ 启动文件：必须包含 *.s 文件
+# ✅ 数学库：必须链接 -lm 或 m
+# ✅ 硬浮点：编译和链接选项保持一致 + 定义 ARM_MATH_CMx
+# ✅ C/C++ 混编：C 头文件使用 extern "C" 包裹
+# ✅ 内存对齐：CAN/DMA 缓冲区使用 __attribute__((aligned(4)))
+# ==============================================================================

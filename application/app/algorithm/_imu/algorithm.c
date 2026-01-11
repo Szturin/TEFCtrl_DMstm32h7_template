@@ -94,7 +94,8 @@ void vofa_demo(void)
 	//==========================================================
 	
 	//====================================================
-	//mahony解算的值
+	//mahony解算的值ee
+
 	vofa_send_data(3, pitch_mahony);
 	vofa_send_data(4, roll_mahony);
 	vofa_send_data(5, yaw_mahony);
