@@ -1,0 +1,62 @@
+# CMake 构建目录和生成文件
+cmake-build-*/
+build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.cmake
+
+# 编译产物
+*.o
+*.d
+*.elf
+*.bin
+*.hex
+*.map
+*.list
+*.su
+*.axf
+*.lst
+
+# Keil MDK-ARM 生成文件
+MDK-ARM/DebugConfig/
+MDK-ARM/RTE/
+MDK-ARM/Listings/
+MDK-ARM/Objects/
+MDK-ARM/*.uvguix.*
+MDK-ARM/*.bak
+MDK-ARM/*.dep
+MDK-ARM/*.uvoptx
+MDK-ARM/*.scvd
+
+# IDE 配置文件
+.vscode/
+.idea/
+.settings/
+*.code-workspace
+
+# STM32CubeMX 备份文件
+*.ioc.bak
+
+# 系统文件
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# 日志和临时文件
+*.log
+*.tmp
+*~
+
+# 调试文件
+*.dblite
+
+# 文档生成文件（如果使用 Doxygen）
+html/
+latex/
+
+# Python 缓存（如果有 Python 脚本）
+__pycache__/
+*.pyc
+*.pyo
