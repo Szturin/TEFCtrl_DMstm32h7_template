@@ -2,11 +2,41 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/application/app/algorithm" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/Mahony" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/Mahony/MahonyAHRS.c" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/QuaternionEKF.c" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/QuaternionEKF.c" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/QuaternionEKF.h" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/QuaternionEKF.h" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/algorithm.c" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/algorithm.c" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/algorithm.h" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/algorithm.h" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/controller.c" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/controller.c" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/controller.h" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/controller.h" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/kalman_filter.c" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/kalman_filter.c" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/kalman_filter.h" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/kalman_filter.h" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/pid.c" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/pid.c" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/pid.h" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/pid.h" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/user_lib.c" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/user_lib.c" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/user_lib.h" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/app/algorithm/_imu/user_lib.h" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/application/app/remote" charset="GBK" />
     <file url="file://$PROJECT_DIR$/application/app/ringbuffer" charset="GBK" />
     <file url="file://$PROJECT_DIR$/application/app/vofa+/vofa.c" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/application/bsp/BMI088/BMI088Middleware.c" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/application/bsp/BMI088/BMI088driver.c" charset="GBK" />
     <file url="file://$PROJECT_DIR$/application/bsp/imu/board/BMI088Middleware.c" charset="GBK" />
     <file url="file://$PROJECT_DIR$/application/bsp/imu/board/BMI088driver.c" charset="GBK" />
+    <file url="mock:///controller.c" charset="GBK" />
     <file url="mock:///dm_motor_ctrl.c" charset="UTF-8" />
+    <file url="mock:///pid.c" charset="GBK" />
   </component>
 </project>
