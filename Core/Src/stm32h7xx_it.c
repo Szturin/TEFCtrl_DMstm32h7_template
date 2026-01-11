@@ -65,8 +65,6 @@ extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
 extern UART_HandleTypeDef huart3;
 extern UART_HandleTypeDef huart10;
-extern TIM_HandleTypeDef htim23;
-
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -196,7 +194,7 @@ void SysTick_Handler(void)
   /* USER CODE BEGIN SysTick_IRQn 0 */
 
   /* USER CODE END SysTick_IRQn 0 */
-
+  HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */
@@ -404,20 +402,6 @@ void FDCAN3_IT1_IRQHandler(void)
   /* USER CODE BEGIN FDCAN3_IT1_IRQn 1 */
 
   /* USER CODE END FDCAN3_IT1_IRQn 1 */
-}
-
-/**
-  * @brief This function handles TIM23 global interrupt.
-  */
-void TIM23_IRQHandler(void)
-{
-  /* USER CODE BEGIN TIM23_IRQn 0 */
-
-  /* USER CODE END TIM23_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim23);
-  /* USER CODE BEGIN TIM23_IRQn 1 */
-
-  /* USER CODE END TIM23_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

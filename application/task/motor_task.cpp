@@ -47,6 +47,6 @@ void motor_task_proc(void) {
     //spd_ctrl(&hfdcan1, 1, motor[Motor1].ctrl.vel_set);
     motor1.setSpeed(50);
     //motor1.setPosition(target_speed,50.0f);
-    motor1.setMIT(0,10,0,0.5,0);
+    motor1.setMIT(0,200,0,0.08,0);
 
 }
