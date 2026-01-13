@@ -13,10 +13,11 @@
 #include "memorymap.h"
 #include "usart.h"
 #include "gpio.h"
+
+#ifdef __cplusplus
 #include <cstdarg>
 #include <cstring>
 #include <cstdio>
-
 
 class Uart_Instance{
 private:
@@ -51,5 +52,16 @@ public:
     }
 };
 
+extern "C" {
+#else
+#include <stdarg.h>
+#include <string.h>
+#include <stdio.h>
+#endif
 
+// C 接口函数声明（如果需要的话）
+
+#ifdef __cplusplus
+}
+#endif
 #endif //TEST_BSP_USART_H

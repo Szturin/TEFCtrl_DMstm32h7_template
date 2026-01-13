@@ -1,6 +1,5 @@
 #include "bsp_system.h"
 #include "remoter_uart.h"
-#include "cmd_parse/uart_task.h"
 
 /*全局变量 warning ！！！*/
 wbus_rc_info_t wbus_rc;
@@ -59,12 +58,11 @@ void parse_wbus_data(wbus_rc_info_t *rc_wbus, uint8_t *buff)
 
 
 // UART 初始化 (DMA + 空闲中断)
-wbus_rc_info_t* RemoteInit(void)
+void RemoteInit(void)
 {
     // 配置 HAL 的 DMA + 空闲中断模式
-   // HAL_UARTEx_ReceiveToIdle_DMA(&huart1, uart1_rx_dma_buffer, sizeof(uart1_rx_dma_buffer));
+    HAL_UARTEx_ReceiveToIdle_DMA(&huart5, uart5_rx_dma_buffer, sizeof(uart5_rx_dma_buffer));
     // 禁用 DMA 半传输中断 (Half Transfer IT)，减少不必要的中断
-   // __HAL_DMA_DISABLE_IT(&hdma_usart1_rx, DMA_IT_HT);
+    __HAL_DMA_DISABLE_IT(&hdma_uart5_rx, DMA_IT_HT);
 
-    return &wbus_rc;
 }

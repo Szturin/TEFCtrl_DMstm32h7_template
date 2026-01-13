@@ -104,7 +104,6 @@ int main(void)
     MX_USB_DEVICE_Init();
     MX_TIM12_Init();
     MX_SPI1_Init();
-    MX_SPI6_Init();
     MX_SPI2_Init();
     MX_TIM3_Init();
     MX_USART1_UART_Init();
@@ -118,6 +117,8 @@ int main(void)
     MX_TIM1_Init();
     MX_TIM2_Init();
     MX_OCTOSPI2_Init();
+    MX_ADC3_Init();
+    MX_UART5_Init();
     /* USER CODE BEGIN 2 */
     HAL_Delay(100); //等待硬件稳定
    // INS_Init();
@@ -130,6 +131,11 @@ int main(void)
     bsp_fdcan_set_baud(&hfdcan1, CAN_CLASS, CAN_BR_1M);
     // 初始化CAN（滤波器+中断）
     bsp_can_init();
+    uart_ringbuffer_init();
+    RemoteInit();
+    HAL_UARTEx_ReceiveToIdle_DMA(&huart5, uart5_rx_dma_buffer, sizeof(uart5_rx_dma_buffer));
+    // 禁用 DMA 半传输中断 (Half Transfer IT)，减少不必要的中断
+    __HAL_DMA_DISABLE_IT(&hdma_uart5_rx, DMA_IT_HT);
 
     // 初始化任务调度器
     os.init();
@@ -137,7 +143,7 @@ int main(void)
     motor_task_init();
 
     os.addTask(motor_task_proc,5,1);
-    os.addTask(uart_task_proc,5,2);
+    os.addTask(UartTask,5,2);
    // os.addTask(IMU_Task,1,1);
     //os.addTask(vofa_start,5,4);
 

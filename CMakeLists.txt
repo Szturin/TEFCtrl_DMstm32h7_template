@@ -100,11 +100,11 @@ file(GLOB_RECURSE SOURCES
 # 明确添加 CMSIS-DSP 所需模块（只编译汇总文件，避免重复定义）
 # CMSIS-DSP 使用汇总文件架构：每个模块的 *Functions.c 已经 include 了所有单独的 .c 文件
 set(DSP_SOURCES
-    "Middlewares/ST/ARM/DSP/Source/MatrixFunctions/MatrixFunctions.c"
-    "Middlewares/ST/ARM/DSP/Source/BasicMathFunctions/BasicMathFunctions.c"
-    "Middlewares/ST/ARM/DSP/Source/FastMathFunctions/FastMathFunctions.c"
-    "Middlewares/ST/ARM/DSP/Source/CommonTables/CommonTables.c"
-    "Middlewares/ST/ARM/DSP/Source/SupportFunctions/SupportFunctions.c"
+        "Middlewares/ST/ARM/DSP/Source/MatrixFunctions/MatrixFunctions.c"
+        "Middlewares/ST/ARM/DSP/Source/BasicMathFunctions/BasicMathFunctions.c"
+        "Middlewares/ST/ARM/DSP/Source/FastMathFunctions/FastMathFunctions.c"
+        "Middlewares/ST/ARM/DSP/Source/CommonTables/CommonTables.c"
+        "Middlewares/ST/ARM/DSP/Source/SupportFunctions/SupportFunctions.c"
 )
 
 list(APPEND SOURCES ${DSP_SOURCES})

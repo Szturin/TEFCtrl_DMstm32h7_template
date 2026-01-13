@@ -24,6 +24,7 @@
     <file url="file://$PROJECT_DIR$/application/bsp/imu/board/BMI088Middleware.c" charset="GBK" />
     <file url="file://$PROJECT_DIR$/application/bsp/imu/board/BMI088driver.c" charset="GBK" />
     <file url="file://$PROJECT_DIR$/application/bsp/typedef.h" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/application/task/uart_task.cpp" charset="GBK" />
     <file url="mock:///controller.c" charset="GBK" />
     <file url="mock:///dm_motor_ctrl.c" charset="UTF-8" />
     <file url="mock:///pid.c" charset="GBK" />

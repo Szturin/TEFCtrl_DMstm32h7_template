@@ -2,8 +2,14 @@
 #define SCHEDULER_H
 
 #include "main.h"
+
+#ifdef __cplusplus
 #include <cstdint>
 #include <cstring>
+#else
+#include <stdint.h>
+#include <string.h>
+#endif
 
 #ifdef __cplusplus
 

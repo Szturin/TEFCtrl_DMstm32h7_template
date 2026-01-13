@@ -54,7 +54,8 @@ void motor_task_proc(void) {
     target_speed = 500.0f * sinf(t);  // 正弦波速度
 
     //位置+速度模式
-    motor1.setPosition(0.0,5.0);
-    motor2.setPosition(0.0,5.0);
-    motor3.setPosition(0.0,5.0);
+    motor1.setPosition((float)wbus_rc.remote.ch1 * 0.0015f,8.0);
+    motor2.setPosition((float)wbus_rc.remote.ch2 * 0.0015f,8.0);
+
+    motor3.setPosition((wbus_rc.remote.SH != 0)?9.0:0,20.0);
 }

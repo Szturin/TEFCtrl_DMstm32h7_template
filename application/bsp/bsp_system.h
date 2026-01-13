@@ -31,15 +31,21 @@ extern "C" {
 #include "stdio.h"
 #include "bsp/can/bsp_fdcan.h"
 
-#include "uart_task.h"
+
 #include "motor_task.h"
 #include "typedef.h"
+#include "app/remote/remoter_uart.h"
+#include "ringbuffer/ringbuffer.h"
+#include "ringbuffer/ringbuffer_test.h"
+
+
 #ifdef __cplusplus
 }
+#endif
 
 //C++ 相关
 #include "bsp/usart/bsp_usart.h"
 #include "task/simple_os/scheduler.h"
-#endif
+#include "uart_task.h"
 
 #endif //TEST_BSP_SYSTEM_H

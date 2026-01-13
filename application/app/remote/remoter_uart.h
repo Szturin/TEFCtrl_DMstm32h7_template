@@ -30,7 +30,7 @@ typedef struct {
 
 extern wbus_rc_info_t wbus_rc;
 
-wbus_rc_info_t* RemoteInit(void);
+void RemoteInit(void);
 void parse_wbus_data(wbus_rc_info_t *rc_wbus, uint8_t *buff);
 
 #endif
