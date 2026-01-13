@@ -42,6 +42,7 @@ void DMMotor::disable(){
     uint16_t can_id = config_.motor_id + config_.set_mode; // 失能电机模式
     sendCANFrame(can_id, data, 8);
 }
+
 void DMMotor::sendCANFrame(uint16_t id, const uint8_t *data, 
                            uint8_t len){
     // BSP层的发送函数
@@ -57,7 +58,7 @@ void DMMotor::setPosition(float pos, float vel){
     memcpy(&data[0], &pos, sizeof(float));
     memcpy(&data[4], &vel, sizeof(float));
 
-    uint16_t can_id = 0x101; // POS_MODE = 0X100
+    uint16_t can_id = config_.motor_id + POS_MODE;
     sendCANFrame(can_id,data,8);
 }
 

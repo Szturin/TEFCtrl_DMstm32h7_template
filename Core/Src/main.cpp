@@ -120,7 +120,7 @@ int main(void)
     MX_OCTOSPI2_Init();
     /* USER CODE BEGIN 2 */
     HAL_Delay(100); //等待硬件稳定
-    INS_Init();
+   // INS_Init();
     // 初始化串口
     uart_log.init();
     uart_log.printf("\r\n System Init.\r\n");
@@ -133,14 +133,16 @@ int main(void)
 
     // 初始化任务调度器
     os.init();
-    uart_task_init();
+    //uart_task_init();
     motor_task_init();
 
     os.addTask(motor_task_proc,5,1);
     os.addTask(uart_task_proc,5,2);
-    os.addTask(IMU_Task,1,1);
-    os.addTask(vofa_start,5,4);
+   // os.addTask(IMU_Task,1,1);
+    //os.addTask(vofa_start,5,4);
+
     HAL_Delay(500); //等待系统稳定
+
     /* USER CODE END 2 */
 
     /* Infinite loop */

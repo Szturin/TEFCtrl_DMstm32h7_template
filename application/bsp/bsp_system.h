@@ -33,7 +33,7 @@ extern "C" {
 
 #include "uart_task.h"
 #include "motor_task.h"
-
+#include "typedef.h"
 #ifdef __cplusplus
 }
 
