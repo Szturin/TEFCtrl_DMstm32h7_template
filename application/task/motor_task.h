@@ -12,7 +12,8 @@ extern "C" {
 
 void motor_task_init(void);
 void motor_task_proc(void);
-
+void shoot_task_init(void);
+void shoot_task_proc(void);
 #ifdef __cplusplus
 }
 #endif

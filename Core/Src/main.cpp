@@ -130,7 +130,8 @@ int main(void)
     // 初始化fdcan
     bsp_fdcan_set_baud(&hfdcan1, CAN_CLASS, CAN_BR_1M);
     // 初始化CAN（滤波器+中断）
-    bsp_can_init();
+  // bsp_can_init();
+
     uart_ringbuffer_init();
     RemoteInit();
     HAL_UARTEx_ReceiveToIdle_DMA(&huart5, uart5_rx_dma_buffer, sizeof(uart5_rx_dma_buffer));
@@ -141,9 +142,10 @@ int main(void)
     os.init();
     //uart_task_init();
     motor_task_init();
-
+    shoot_task_init();
     os.addTask(motor_task_proc,5,1);
-    os.addTask(UartTask,5,2);
+    //os.addTask(UartTask,5,2);
+    os.addTask(shoot_task_proc,5,2);
    // os.addTask(IMU_Task,1,1);
     //os.addTask(vofa_start,5,4);
 

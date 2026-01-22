@@ -174,6 +174,18 @@ uint8_t fdcanx_send_data(hcan_t *hfdcan, uint16_t id, uint8_t *data, uint32_t le
     pTxHeader.TxEventFifoControl=FDCAN_NO_TX_EVENTS;
     pTxHeader.MessageMarker=0;
 
+    FDCAN_TxHeaderTypeDef TxHeader;
+
+    pTxHeader.Identifier = id;
+    pTxHeader.IdType = FDCAN_STANDARD_ID; // 必须是 STANDARD_ID，严禁使用 EXTENDED_ID
+    pTxHeader.TxFrameType = FDCAN_DATA_FRAME;
+    pTxHeader.DataLength = FDCAN_DLC_BYTES_8; // 长度为8
+    pTxHeader.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+    pTxHeader.BitRateSwitch = FDCAN_BRS_OFF; // 关闭波特率切换
+    pTxHeader.FDFormat = FDCAN_CLASSIC_CAN;  // 必须是 CLASSIC_CAN
+    pTxHeader.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+    pTxHeader.MessageMarker = 0;
+
 	if(HAL_FDCAN_AddMessageToTxFifoQ(hfdcan, &pTxHeader, data)!=HAL_OK)
 		return 1;//发送
 	return 0;
@@ -246,6 +258,213 @@ void HAL_FDCAN_ErrorStatusCallback(FDCAN_HandleTypeDef *hfdcan, uint32_t ErrorSt
 }
 
 
+#include "main.h"
+#include "fdcan.h"
+#include "stdlib.h"
+#include "string.h"
+
+static FDCANInstance *fdcan_instance[FDCAN_MX_REGISTER_CNT] = {NULL}; // 全局动态列表
+static uint8_t fdcan_idx = 0;
+
+/* ---------------- 内部私有函数 ---------------- */
+
+/**
+ * @brief 字节长度转FDCAN DLC编码
+ */
+static uint32_t ByteToDLC(uint8_t len){
+    if(len <= 8) return len << 16;
+    if(len <= 12) return FDCAN_DLC_BYTES_12;
+    if(len <= 16) return FDCAN_DLC_BYTES_16;
+    if(len <= 20) return FDCAN_DLC_BYTES_20;
+    if(len <= 24) return FDCAN_DLC_BYTES_24;
+    if(len <= 32) return FDCAN_DLC_BYTES_32;
+    if(len <= 48) return FDCAN_DLC_BYTES_48;
+    return FDCAN_DLC_BYTES_64;
+}
+
+/**
+ * @brief FDCAN DLC编码转字节长度
+ */
+static uint8_t DLCToByte(uint32_t dlc) {
+    if (dlc <= FDCAN_DLC_BYTES_8) return dlc >> 16;
+    switch (dlc) {
+    case FDCAN_DLC_BYTES_12: return 12;
+    case FDCAN_DLC_BYTES_16: return 16;
+    case FDCAN_DLC_BYTES_20: return 20;
+    case FDCAN_DLC_BYTES_24: return 24;
+    case FDCAN_DLC_BYTES_32: return 32;
+    case FDCAN_DLC_BYTES_48: return 48;
+    case FDCAN_DLC_BYTES_64: return 64;
+    default: return 8;
+    }
+}
+
+/**
+ * @brief 为单独的实例配置硬件过滤器
+ */
+static void FDCANAddFilter(FDCANInstance *_instance)
+{
+    FDCAN_FilterTypeDef FilterConfig;
+    FilterConfig.IdType = FDCAN_STANDARD_ID;
+    FilterConfig.FilterIndex = 0; // 简单的索引分配
+    FilterConfig.FilterType = FDCAN_FILTER_MASK;
+    FilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+    FilterConfig.FilterID1 = 0;
+    FilterConfig.FilterID2 = 0; // 精确匹配接收ID
+
+    HAL_FDCAN_ConfigFilter(_instance->fdcan_handle, &FilterConfig);
+}
+
+/* ---------------- 外部接口函数 ---------------- */
+/**
+ * @brief 动态设置FDCAN波特率 (基于80MHz时钟)
+ * @note 注意，不要自行把这个封装到实例中！波特率针对的是整条can线路，不适合作为实例的属性！
+ */
+ /*
+void bsp_fdcan_set_baud(FDCAN_HandleTypeDef *hfdcan,
+                        uint8_t mode, uint8_t baud) {
+    uint32_t nom_brp=1, nom_seg1=59, nom_seg2=20, nom_sjw=20;
+    uint32_t dat_brp=1, dat_seg1=29, dat_seg2=10, dat_sjw=10;
+
+    HAL_FDCAN_Stop(hfdcan); // 修改前必须停止
+
+    if (mode == CAN_CLASS) {
+        hfdcan->Init.FrameFormat = FDCAN_FRAME_CLASSIC;
+        switch (baud) {
+        case CAN_BR_125K: nom_brp=4; nom_seg1=139; nom_seg2=20; nom_sjw=20; break;
+        case CAN_BR_500K: nom_brp=1; nom_seg1=139; nom_seg2=20; nom_sjw=20; break;
+        case CAN_BR_1M:   nom_brp=1; nom_seg1=59;  nom_seg2=20; nom_sjw=20; break;
+        }
+    } else {
+        hfdcan->Init.FrameFormat = FDCAN_FRAME_FD_BRS;
+        switch (baud) {
+        case CAN_BR_2M: dat_brp=1; dat_seg1=29; dat_seg2=10; dat_sjw=10; break;
+        case CAN_BR_5M: dat_brp=1; dat_seg1=13; dat_seg2=2;  dat_sjw=2;  break;
+        }
+    }
+
+    hfdcan->Init.NominalPrescaler = nom_brp;
+    hfdcan->Init.NominalTimeSeg1 = nom_seg1;
+    hfdcan->Init.NominalTimeSeg2 = nom_seg2;
+    hfdcan->Init.NominalSyncJumpWidth = nom_sjw;
+    hfdcan->Init.DataPrescaler = dat_brp;
+    hfdcan->Init.DataTimeSeg1 = dat_seg1;
+    hfdcan->Init.DataTimeSeg2 = dat_seg2;
+    hfdcan->Init.DataSyncJumpWidth = dat_sjw;
+
+    HAL_FDCAN_Init(hfdcan); // 重新应用时序
+}
+*/
+/**
+ * @brief 注册FDCAN实例
+ * @note 核心函数！！！
+ */
+FDCANInstance *FDCANRegister(FDCAN_Init_Config_s *config){
+    if(fdcan_idx >= FDCAN_MX_REGISTER_CNT) return NULL; // fdcan_索引是否超过最大允许实例数
+
+    // CAN总线全局初始化配置，检测硬件状态是否为READY,确认第一次注册实例，总线级别初始化
+    // @brief 此代码段与实例相关解耦！决定哪条CAN总线的全局默认配置
+    if(config->fdcan_handle->State == HAL_FDCAN_STATE_READY){
+        // 1. 全局过滤配置：拒绝未定义报文
+        HAL_FDCAN_ConfigGlobalFilter(config->fdcan_handle, FDCAN_REJECT, FDCAN_REJECT,FDCAN_REJECT_REMOTE, FDCAN_REJECT_REMOTE);
+        // 2. 水位线配置：1条消息即触发中断
+        HAL_FDCAN_ConfigFifoWatermark(config->fdcan_handle, FDCAN_CFG_RX_FIFO0, 1);
+
+        // 3. 开启硬件
+        HAL_FDCAN_Start(config->fdcan_handle);
+        // 4. 激活通知中断
+       // HAL_FDCAN_ActivateNotification(config->fdcan_handle, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
+
+        HAL_FDCAN_ActivateNotification(config->fdcan_handle,
+                                       0 | FDCAN_IT_RX_FIFO0_WATERMARK | FDCAN_IT_RX_FIFO0_WATERMARK
+                                       | FDCAN_IT_TX_COMPLETE | FDCAN_IT_TX_FIFO_EMPTY | FDCAN_IT_BUS_OFF
+                                       | FDCAN_IT_ARB_PROTOCOL_ERROR | FDCAN_IT_DATA_PROTOCOL_ERROR
+                                       | FDCAN_IT_ERROR_PASSIVE | FDCAN_IT_ERROR_WARNING,
+                                       0x00000F00);
+    }
+
+    FDCANInstance  *instance = (FDCANInstance*)malloc(sizeof(FDCANInstance));
+    memset(instance, 0, sizeof(FDCANInstance));
+
+    // 配置内容
+    instance->fdcan_handle = config->fdcan_handle;
+    instance->tx_id = config->tx_id;
+    instance->rx_id = config->rx_id;
+    instance->fdcan_module_callback = config->fdcan_module_callback;
+    instance->id = config->id;
+
+    // 配置发送头
+    instance->txconf.Identifier = config->tx_id;
+    instance->txconf.IdType = FDCAN_STANDARD_ID;
+    instance->txconf.TxFrameType = FDCAN_DATA_FRAME;
+    instance->txconf.DataLength = ByteToDLC(config->data_len);
+    instance->txconf.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+
+    // 根据总线实际初始化模式动态配置FD功能
+    if (config->fdcan_handle->Init.FrameFormat == FDCAN_FRAME_CLASSIC) {
+        instance->txconf.BitRateSwitch = FDCAN_BRS_OFF;
+        instance->txconf.FDFormat = FDCAN_CLASSIC_CAN;
+    } else {
+        instance->txconf.BitRateSwitch = FDCAN_BRS_ON;
+        instance->txconf.FDFormat = FDCAN_FD_CAN;
+    }
+
+    instance->txconf.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+    instance->txconf.MessageMarker = 0;
+
+    // 配置滤波器
+    FDCANAddFilter(instance);
+    fdcan_instance[fdcan_idx++] = instance;
+
+    return instance; // 必须返回实例指针
+}
+
+/**
+ * @brief FDCAN发送函数
+ */
+uint8_t FDCANTransmit(FDCANInstance *_instance, uint16_t len) {
+    _instance->txconf.DataLength = ByteToDLC(len);
+    if (HAL_FDCAN_AddMessageToTxFifoQ(_instance->fdcan_handle, &_instance->txconf, _instance->tx_buff) != HAL_OK) {
+        return 0;
+    }
+    return 1;
+}
+
+
+/* ---------------- HAL中断/回调处理部分 ---------------- */
+/**
+ * @brief 中断分发回调
+ */
+/*
+void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs) {
+
+    if ((RxFifo0ITs & FDCAN_IT_RX_FIFO0_NEW_MESSAGE) != RESET) { // 中断(消息)标志位检测
+        FDCAN_RxHeaderTypeDef rx_header;
+        uint8_t rx_data[64];//接受缓存创建（申请）
+
+        // 循环提取FIFO中所有报文，直到FIFO为空，防止FIFO溢出
+        while (HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0,
+                                      &rx_header, rx_data) == HAL_OK) {
+            // 遍历 CAN总线双匹配算法，定位具体实例，无需重复写接受的逻辑，实现多总线，多设备逻辑泛化
+            for (uint8_t i = 0; i < fdcan_idx; i++) { // 遍历所有注册的can实例
+                // 精确匹配：硬件句柄 + 报文ID
+                if (hfdcan == fdcan_instance[i]->fdcan_handle && // 确认来自哪条can总线
+                    rx_header.Identifier == fdcan_instance[i]->rx_id) { // 确认来自该can总线哪个id(具体设备)
+
+                    // 长度DLC转换
+                    fdcan_instance[i]->rx_len = DLCToByte(rx_header.DataLength);
+                    memcpy(fdcan_instance[i]->rx_buff, rx_data,
+                           fdcan_instance[i]->rx_len);// 从临时栈空间拷贝到实例的物理空间中
+                    if (fdcan_instance[i]->fdcan_module_callback != NULL) {//执行实例对应的应用级回调函数
+                        fdcan_instance[i]->fdcan_module_callback(fdcan_instance[i]);
+                    }
+
+                    break;
+                }
+            }
+        }
+    }
+}*/
 
 
 
