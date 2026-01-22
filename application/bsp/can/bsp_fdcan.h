@@ -49,7 +49,7 @@ typedef struct _FDCANInstance{
     uint8_t tx_buff[64]; // 发送缓冲区，FDCAN最大64字节
     uint8_t rx_buff[64]; // 接受缓冲区
     uint32_t rx_id; // 指定接受的报文id
-    uint8_t rx_len;// 实际接收的数据长度
+    uint8_t rx_len;// 实际接收的数据长度s
 
     //接受回调，传入实例指针
     void (*fdcan_module_callback)(struct _FDCANInstance*);
