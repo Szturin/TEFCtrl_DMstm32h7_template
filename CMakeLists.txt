@@ -76,13 +76,11 @@ include_directories(
         Middlewares/Third_Party/RealThread_RTOS_RT-Thread/include/libc/extension/fcntl/msvc/
         Middlewares/Third_Party/RealThread_RTOS_RT-Thread/include/libc/extension/fcntl/octal/
         Middlewares/ST/ARM/DSP/Include
-        Application
-        Application/bsp
-        Application/bsp/include
-        Application/app
-        Application/task
-        # 如果 bsp_dwt.h 在具体的子文件夹里，请在这里继续添加，例如：
-        # Application/app/algorithm/_imu
+        application
+        application/bsp
+        application/bsp/usart
+        application/modules
+        application/task
 )
 
 # 确保包含所有源文件（包括启动汇编文件）
@@ -91,10 +89,9 @@ file(GLOB_RECURSE SOURCES
         "Core/*.cpp"
         "Core/*.s"
         "Drivers/*.c"
-        "Application/*.c"
-        "Application/*.cpp"
+        "application/*.c"
+        "application/*.cpp"
         "USB_DEVICE/*.c"
-        "RT-Thread/*.c"
 )
 
 # 明确添加 CMSIS-DSP 所需模块（只编译汇总文件，避免重复定义）
