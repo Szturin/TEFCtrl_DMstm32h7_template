@@ -12,7 +12,7 @@
  ******************************************************************************
  */
 #include "controller.h"
-#include "BMI088/bsp_dwt.h"
+#include "bsp/dwt/bsp_dwt.h"
 
 /******************************** FUZZY PID **********************************/
 static float FuzzyRuleKpRAW[7][7] = {

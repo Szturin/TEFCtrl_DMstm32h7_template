@@ -79,6 +79,7 @@ include_directories(
         application
         application/bsp
         application/bsp/usart
+        application/bsp/dwt
         application/modules
         application/task
 )

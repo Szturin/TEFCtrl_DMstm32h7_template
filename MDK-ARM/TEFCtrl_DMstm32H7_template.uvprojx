@@ -683,12 +683,7 @@
         </Group>
         <Group>
           <GroupName>user/bsp</GroupName>
-                                                            <Files>
-            <File>
-              <FileName>bsp_system.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\application\bsp\bsp_system.h</FilePath>
-            </File>
+                                                                      <Files>
             <File>
               <FileName>typedef.h</FileName>
               <FileType>5</FileType>
@@ -720,16 +715,6 @@
               <FilePath>..\application\bsp\BMI088\BMI088reg.h</FilePath>
             </File>
             <File>
-              <FileName>bsp_dwt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\application\bsp\BMI088\bsp_dwt.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_dwt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\application\bsp\BMI088\bsp_dwt.h</FilePath>
-            </File>
-            <File>
               <FileName>bsp_fdcan.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\application\bsp\can\bsp_fdcan.c</FilePath>
@@ -750,6 +735,16 @@
               <FilePath>..\application\bsp\delay\delay.h</FilePath>
             </File>
             <File>
+              <FileName>bsp_dwt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\bsp\dwt\bsp_dwt.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_dwt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\bsp\dwt\bsp_dwt.h</FilePath>
+            </File>
+            <File>
               <FileName>bsp_usart.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\application\bsp\usart\bsp_usart.cpp</FilePath>
@@ -763,7 +758,7 @@
         </Group>
         <Group>
           <GroupName>user/modules</GroupName>
-                                                            <Files>
+                                                                      <Files>
             <File>
               <FileName>general_def.h</FileName>
               <FileType>5</FileType>
@@ -870,6 +865,16 @@
               <FilePath>..\application\modules\algorithm\_imu\user_lib.h</FilePath>
             </File>
             <File>
+              <FileName>daemon.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\modules\daemon\daemon.c</FilePath>
+            </File>
+            <File>
+              <FileName>daemon.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\modules\daemon\daemon.h</FilePath>
+            </File>
+            <File>
               <FileName>dji_motor.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\application\modules\motor\dji_motor\dji_motor.cpp</FilePath>
@@ -925,6 +930,51 @@
               <FilePath>..\application\modules\motor\dm_motor\dm_motor_drv.h</FilePath>
             </File>
             <File>
+              <FileName>crc_ref.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\modules\referee\crc_ref.c</FilePath>
+            </File>
+            <File>
+              <FileName>crc_ref.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\modules\referee\crc_ref.h</FilePath>
+            </File>
+            <File>
+              <FileName>referee_UI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\modules\referee\referee_UI.c</FilePath>
+            </File>
+            <File>
+              <FileName>referee_UI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\modules\referee\referee_UI.h</FilePath>
+            </File>
+            <File>
+              <FileName>referee_protocol.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\modules\referee\referee_protocol.h</FilePath>
+            </File>
+            <File>
+              <FileName>referee_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\modules\referee\referee_task.c</FilePath>
+            </File>
+            <File>
+              <FileName>referee_task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\modules\referee\referee_task.h</FilePath>
+            </File>
+            <File>
+              <FileName>rm_referee.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\modules\referee\rm_referee.c</FilePath>
+            </File>
+            <File>
+              <FileName>rm_referee.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\modules\referee\rm_referee.h</FilePath>
+            </File>
+            <File>
               <FileName>remoter_uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\application\modules\remote\remoter_uart.c</FilePath>
@@ -958,7 +1008,7 @@
         </Group>
         <Group>
           <GroupName>user/task</GroupName>
-                                                            <Files>
+                                                                      <Files>
             <File>
               <FileName>imu_temp_ctrl.c</FileName>
               <FileType>1</FileType>
