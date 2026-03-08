@@ -1,6 +1,6 @@
-# TEFCtrl STM32H7 模板工程
+# TEFCtrl STM32H7 template
 
-基于 STM32H723VGTx 的 RoboMaster 机器人控制板**通用模板**，支持 Keil MDK 和 CLion/VSCode (CMake) 双构建系统。
+基于 STM32H723VGTx 的 RoboMaster 机器人控制板**通用模板**，支持 Keil MDK 和 CLion/VSCode (CMake) 构建系统。
 
 ## 硬件配置
 
@@ -21,7 +21,7 @@
 ### 核心设计理念
 
 - **CubeMX 隔离**：`Core/Src/main.c` 由 CubeMX 管理（纯 C），C++ 应用逻辑在 `application/app_main.cpp`，重新生成不破坏应用代码
-- **C/C++ 混编**：BSP 层用 C，应用/驱动层用 C++，`extern "C"` 全面防护
+- **C/C++ 混编**：BSP 层用 C，应用/驱动层用 C++，`extern "C"` 隔离
 - **双构建系统**：CMake（CLion/VSCode）和 Keil MDK 均可编译；`sync_keil.py` 自动同步新增文件到 Keil 工程
 
 ### 目录结构
@@ -146,7 +146,7 @@ CubeMX 只修改 `Core/` 下的文件，应用代码安全。重新生成后：
 | 微分低通滤波 | `D_alpha` 参数，抑制传感器高频噪声 |
 | 积分分离 | `EIS_Max`：误差过大时停止积分 |
 | 限幅抗积分饱和 | 输出饱和且同向时停止积分 |
-| 前馈 | `FF_gain * target`，改善跟踪速度 |
+| 前馈 | `FF_gain * target`，改进跟踪速度，减少输入输出相位差 |
 
 所有限幅字段置 0 表示禁用。`pid_tune.c` 提供 VOFA+ 串口滑块调参协议（格式：`Kp:1.5\r\n`）。
 
@@ -204,12 +204,12 @@ RT-Thread 已集成在 `Middlewares/Third_Party/RealThread_RTOS_RT-Thread/` 中�
 - C 标准：C11 / C++ 标准：C++17
 - 编译器（Keil）：ARMCLANG AC6，`-mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard`
 - 编译器（CMake）：arm-none-eabi-gcc，同等 FPU 配置
-- 调度器：**裸机协作式调度器 simple_os**（非抢占，基于 HAL_GetTick 轮询；RT-Thread 预集成可切换）
+- 调度器：**裸机调度器 simple_os**（非抢占，基于 HAL_GetTick 轮询；RT-Thread 预集成可切换）
 - DSP：CMSIS-DSP 源码编译（Matrix / FastMath / CommonTables）
 
 ## 裸机调度器说明（simple_os）
 
-本工程为**裸机工程**，使用协作式（非抢占）调度器，无操作系统。
+本工程为**裸机工程**，使用轮询式（非抢占）调度器，无操作系统。
 
 **运行机制**：主循环每毫秒扫描一次所有任务，满足 `经过时间 >= 周期` 则顺序执行。
 

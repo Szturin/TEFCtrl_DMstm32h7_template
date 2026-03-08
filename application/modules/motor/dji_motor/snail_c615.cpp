@@ -13,15 +13,15 @@
 #define SNAIL_CHANNEL_R   TIM_CHANNEL_3
 
 void snail_init(void) {
-    // 1. 初始输出最低有效脉宽，防止上电即旋转
+    // 初始输出最低有效脉宽，防止上电即旋转
     __HAL_TIM_SET_COMPARE(&htim2, SNAIL_CHANNEL_L, SNAIL_PWM_MIN);
     __HAL_TIM_SET_COMPARE(&htim2, SNAIL_CHANNEL_R, SNAIL_PWM_MIN);
 
-    // 2. 开启 PWM 输出
+    // 开启 PWM 输出
     HAL_TIM_PWM_Start(&htim2, SNAIL_CHANNEL_L);
     HAL_TIM_PWM_Start(&htim2, SNAIL_CHANNEL_R);
 
-    // 3. 等待电调自检完成 (听到“开机音”表示就绪)
+    // 等待电调自检完成 (听到“开机音”表示就绪)
     HAL_Delay(2000);
 }
 
