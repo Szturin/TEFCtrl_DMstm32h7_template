@@ -1,6 +1,8 @@
 #include "daemon.h"
 #include <string.h>
 
+/*WDT开门狗模块*/
+
 // 静态内存池，避免 heap malloc 在裸机/RTOS 中的不确定性
 static DaemonInstance daemon_pool[DAEMON_MX_CNT];
 static uint8_t idx; // 已注册数量
@@ -21,7 +23,7 @@ DaemonInstance *DaemonRegister(Daemon_Init_Config_s *config)
 }
 
 /* 喂狗：模块收到数据时调用，重置计数并标记为在线 */
-void DaemonReload(DaemonInstance *instance)
+void DaemonReload(DaemonInstance *instance)  // e.g.:喂狗一次，狗粮100（100ms超时）
 {
     instance->temp_count = instance->reload_count;
     instance->is_online  = 1;
@@ -32,17 +34,17 @@ uint8_t DaemonIsOnline(DaemonInstance *instance)
     return instance->is_online;
 }
 
-/* 软件看门狗主任务，推荐 1ms 调用一次 */
+/* 软件看门狗主任务， 1ms 调用一次 */
 void DaemonTask(void)
 {
     for (uint8_t i = 0; i < idx; ++i)
     {
         DaemonInstance *d = &daemon_pool[i];
-        if (d->temp_count > 0)
+        if (d->temp_count > 0) // 有余粮否
         {
             d->temp_count--;
         }
-        else if (d->is_online) // 在线→离线 边沿触发，只执行一次
+        else if (d->is_online) // 无计数，模块在线→离线， 边沿触发，只执行一次（已经离线的模块不会再上限）。
         {
             d->is_online = 0;
             if (d->callback)

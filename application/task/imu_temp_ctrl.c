@@ -4,8 +4,10 @@
 #define correct_Time_define 1000    //上电去0飘 1000次取平均
 #define temp_times 300       //探测温度阈值
 
-pid_type_def Temperature_PID={0};
-float Temperature_PID_Para[3]={1600,50,40};
+PID_TypeDef Temperature_PID = {
+    .Kp = 1600.f, .Ki = 50.f, .Kd = 40.f,
+    .Output_Max = 2000.f, .Integral_Max = 200.f
+};
 float H723_Temperature=0.f;
 unsigned int adc_v;
 float adcx;
@@ -21,7 +23,7 @@ uint32_t correct_times=0;
 void INS_Init(void)
 {
     IMU_QuaternionEKF_Init(10, 0.001, 10000000, 1, 0.001f,0); //ekf初始化
-		PID_init(&Temperature_PID, PID_POSITION,Temperature_PID_Para,2000,200); //加热pidlimit
+	    PID_Reset(&Temperature_PID); //加热PID初始化
 		Mahony_Init(1000);  //mahony姿态解算初始化
     // imu heat init
     HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
@@ -31,9 +33,9 @@ void INS_Init(void)
 uint32_t temp_temperature=0;
 
 void IMU_Temperature_Ctrl(){
-	  PID_calc(&Temperature_PID, temp, RefTemp); //温度pid  //需要调一下pid使得温度在40°左右
-		temp_temperature=(uint32_t)Temperature_PID.out; 
-		if(Temperature_PID.out<0)
+    Position_PID(&Temperature_PID, temp, RefTemp); //温度pid
+    temp_temperature = (uint32_t)Temperature_PID.Output;
+    if (Temperature_PID.Output < 0)
 		{
 			temp_temperature=0;
 		}

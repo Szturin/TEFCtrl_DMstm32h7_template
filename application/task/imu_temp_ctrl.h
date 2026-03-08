@@ -9,7 +9,7 @@
 #include "algorithm/_imu/kalman_filter.h"
 #include "algorithm/_imu/QuaternionEKF.h"
 #include "imu_temp_ctrl.h"
-#include "algorithm/_imu/pid.h"
+#include "algorithm/controller/pid.h"
 #include "algorithm/Mahony/MahonyAHRS.h"
 #ifdef __cplusplus
 extern "C" {

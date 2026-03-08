@@ -459,6 +459,11 @@
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32h7xx_hal_msp.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32h7xx_hal_timebase_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/stm32h7xx_hal_timebase_tim.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -678,7 +683,7 @@
         </Group>
         <Group>
           <GroupName>user/bsp</GroupName>
-          <Files>
+                    <Files>
             <File>
               <FileName>typedef.h</FileName>
               <FileType>5</FileType>
@@ -753,11 +758,31 @@
         </Group>
         <Group>
           <GroupName>user/modules</GroupName>
-          <Files>
+                    <Files>
             <File>
               <FileName>general_def.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\application\modules\general_def.h</FilePath>
+            </File>
+            <File>
+              <FileName>pid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\modules\algorithm\controller\pid.c</FilePath>
+            </File>
+            <File>
+              <FileName>pid.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\modules\algorithm\controller\pid.h</FilePath>
+            </File>
+            <File>
+              <FileName>pid_tune.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\modules\algorithm\controller\pid_tune.c</FilePath>
+            </File>
+            <File>
+              <FileName>pid_tune.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\modules\algorithm\controller\pid_tune.h</FilePath>
             </File>
             <File>
               <FileName>MahonyAHRS.c</FileName>
@@ -778,26 +803,6 @@
               <FileName>math.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\application\modules\algorithm\math\math.h</FilePath>
-            </File>
-            <File>
-              <FileName>pid_plus.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\application\modules\algorithm\PID\pid_plus.c</FilePath>
-            </File>
-            <File>
-              <FileName>pid_plus.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\application\modules\algorithm\PID\pid_plus.h</FilePath>
-            </File>
-            <File>
-              <FileName>pid_test_app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\application\modules\algorithm\PID\pid_test_app.c</FilePath>
-            </File>
-            <File>
-              <FileName>pid_test_app.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\application\modules\algorithm\PID\pid_test_app.h</FilePath>
             </File>
             <File>
               <FileName>QuaternionEKF.c</FileName>
@@ -838,16 +843,6 @@
               <FileName>kalman_filter.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\application\modules\algorithm\_imu\kalman_filter.h</FilePath>
-            </File>
-            <File>
-              <FileName>pid.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\application\modules\algorithm\_imu\pid.c</FilePath>
-            </File>
-            <File>
-              <FileName>pid.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\application\modules\algorithm\_imu\pid.h</FilePath>
             </File>
             <File>
               <FileName>user_lib.c</FileName>
@@ -1003,7 +998,7 @@
         </Group>
         <Group>
           <GroupName>user/task</GroupName>
-          <Files>
+                    <Files>
             <File>
               <FileName>imu_temp_ctrl.c</FileName>
               <FileType>1</FileType>

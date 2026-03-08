@@ -58,6 +58,4 @@ test/pid_test_app.o: ..\application\modules\algorithm\PID\pid_test_app.c \
   ..\application\modules\remote\remoter_uart.h \
   ..\application\modules\ringbuffer\ringbuffer.h \
   D:\keil5\ARM\ARMCLANG\include\assert.h \
-  ..\application\modules\daemon\daemon.h \
-  ..\application\modules\referee\referee_protocol.h \
-  ..\application\modules\referee\rm_referee.h
+  ..\application\modules\daemon\daemon.h

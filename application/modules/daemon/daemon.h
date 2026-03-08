@@ -13,7 +13,7 @@ typedef void (*offline_callback)(void *);
 typedef struct daemon_ins
 {
     uint16_t reload_count;     // 重载值（喂狗周期，单位：DaemonTask调用次数）
-    offline_callback callback; // 掉线回调，边沿触发，仅在在线→离线瞬间调用一次
+    offline_callback callback; // 掉线回调，边沿触发
 
     uint16_t temp_count;       // 当前倒计数，减为零说明模块离线
     uint8_t  is_online;        // 在线标志：1=在线，0=离线；由DaemonReload置1

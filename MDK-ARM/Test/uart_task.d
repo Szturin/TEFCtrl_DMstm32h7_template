@@ -225,9 +225,8 @@ test/uart_task.o: ..\application\task\uart_task.cpp \
   ..\application\modules\ringbuffer\ringbuffer.h \
   D:\keil5\ARM\ARMCLANG\include\assert.h \
   ..\application\modules\daemon\daemon.h \
-  ..\application\modules\referee\referee_protocol.h \
-  ..\application\modules\referee\rm_referee.h \
   ..\application\task\simple_os\scheduler.h \
   ..\application\task\motor_task.h \
   ..\application\modules\motor\dm_motor\dm_motor_ctrl.h \
-  ..\application\modules\motor\dm_motor\dm_motor_drv.h
+  ..\application\modules\motor\dm_motor\dm_motor_drv.h \
+  ..\application\modules\ringbuffer\ringbuffer_test.h

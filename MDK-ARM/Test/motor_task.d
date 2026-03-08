@@ -228,10 +228,9 @@ test/motor_task.o: ..\application\task\motor_task.cpp \
   ..\application\modules\ringbuffer\ringbuffer.h \
   D:\keil5\ARM\ARMCLANG\include\assert.h \
   ..\application\modules\daemon\daemon.h \
-  ..\application\modules\referee\referee_protocol.h \
-  ..\application\modules\referee\rm_referee.h \
   ..\application\task\simple_os\scheduler.h \
   ..\application\task\uart_task.h \
+  ..\application\modules\ringbuffer\ringbuffer_test.h \
   ..\application\modules\motor\dji_motor\dji_motor.h \
   ..\application\modules\motor\dji_motor\motor_def.h \
   ..\application\modules\motor\dji_motor\snail_c615.h
