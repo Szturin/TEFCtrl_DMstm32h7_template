@@ -1,51 +1,53 @@
 #include "daemon.h"
-#include <stdlib.h>
 #include <string.h>
 
-// ���ڱ������е�daemon instance
-static DaemonInstance *daemon_instances[DAEMON_MX_CNT] = {NULL};
-static uint8_t idx; // ���ڼ�¼��ǰ��daemon instance����,��ϻص�ʹ��
+// 静态内存池，避免 heap malloc 在裸机/RTOS 中的不确定性
+static DaemonInstance daemon_pool[DAEMON_MX_CNT];
+static uint8_t idx; // 已注册数量
 
 DaemonInstance *DaemonRegister(Daemon_Init_Config_s *config)
 {
-    DaemonInstance *instance = (DaemonInstance *)malloc(sizeof(DaemonInstance));
+    DaemonInstance *instance = &daemon_pool[idx++];
     memset(instance, 0, sizeof(DaemonInstance));
 
-    instance->owner_id = config->owner_id;
-    instance->reload_count = config->reload_count == 0 ? 100 : config->reload_count; // Ĭ��ֵΪ100
-    instance->callback = config->callback;
-    instance->temp_count = config->init_count == 0 ? 100 : config->init_count; // Ĭ��ֵΪ100,��ʼ����
+    instance->owner_id    = config->owner_id;
+    instance->reload_count = config->reload_count ? config->reload_count : 100;
+    instance->callback    = config->callback;
+    // init_count：首次上线的宽限计数；0则使用 reload_count
+    instance->temp_count  = config->init_count ? config->init_count : instance->reload_count;
+    instance->is_online   = 0; // 未喂狗前不视为在线，callback不触发
 
-    instance->temp_count = config->reload_count;
-    daemon_instances[idx++] = instance;
     return instance;
 }
 
-/* "ι��"���� */
+/* 喂狗：模块收到数据时调用，重置计数并标记为在线 */
 void DaemonReload(DaemonInstance *instance)
 {
     instance->temp_count = instance->reload_count;
+    instance->is_online  = 1;
 }
 
 uint8_t DaemonIsOnline(DaemonInstance *instance)
 {
-    return instance->temp_count > 0;
+    return instance->is_online;
 }
 
-/*�������Ź�������ĳ�STM32Ӳ�����Ź��ж�*/
-void DaemonTask()
+/* 软件看门狗主任务，推荐 1ms 调用一次 */
+void DaemonTask(void)
 {
-    DaemonInstance *dins; // ��߿ɶ���ͬʱ���ͷô濪��
-    for (size_t i = 0; i < idx; ++i)
+    for (uint8_t i = 0; i < idx; ++i)
     {
-
-        dins = daemon_instances[i];
-        if (dins->temp_count > 0) // �������������ֵ,˵����һ��ι����û�г�ʱ,���������һ
-            dins->temp_count--;
-        else if (dins->callback) // ������˵����ʱ��,���ûص�����(����еĻ�)
+        DaemonInstance *d = &daemon_pool[i];
+        if (d->temp_count > 0)
         {
-            dins->callback(dins->owner_id); // module�ڿ��Խ�owner_idǿ������ת�����������ʹӶ������ض�module��offline callback
-            // @todo Ϊ������/led���������߱����Ĺ���,�ǳ��ؼ�!
+            d->temp_count--;
         }
+        else if (d->is_online) // 在线→离线 边沿触发，只执行一次
+        {
+            d->is_online = 0;
+            if (d->callback)
+                d->callback(d->owner_id);
+        }
+        // is_online=0 且 temp_count=0：持续离线，不再重复触发
     }
 }

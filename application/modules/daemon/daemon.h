@@ -6,57 +6,50 @@
 
 #define DAEMON_MX_CNT 64
 
-/* Ä£¿éÀëÏß´¦Àíº¯ÊıÖ¸Õë */
+/* æ¨¡å—ç¦»çº¿å¤„ç†å‡½æ•°æŒ‡é’ˆ */
 typedef void (*offline_callback)(void *);
 
-/* daemon½á¹¹Ìå¶¨Òå */
+/* daemonç»“æ„ä½“å®šä¹‰ */
 typedef struct daemon_ins
 {
-    uint16_t reload_count;     // ÖØÔØÖµ
-    offline_callback callback; // Òì³£´¦Àíº¯Êı,µ±Ä£¿é·¢ÉúÒì³£Ê±»á±»µ÷ÓÃ
+    uint16_t reload_count;     // é‡è½½å€¼ï¼ˆå–‚ç‹—å‘¨æœŸï¼Œå•ä½ï¼šDaemonTaskè°ƒç”¨æ¬¡æ•°ï¼‰
+    offline_callback callback; // æ‰çº¿å›è°ƒï¼Œè¾¹æ²¿è§¦å‘ï¼Œä»…åœ¨åœ¨çº¿â†’ç¦»çº¿ç¬é—´è°ƒç”¨ä¸€æ¬¡
 
-    uint16_t temp_count; // µ±Ç°Öµ,¼õÎªÁãËµÃ÷Ä£¿éÀëÏß»òÒì³£
-    void *owner_id;      // daemonÊµÀıµÄµØÖ·,³õÊ¼»¯µÄÊ±ºòÌîÈë
+    uint16_t temp_count;       // å½“å‰å€’è®¡æ•°ï¼Œå‡ä¸ºé›¶è¯´æ˜æ¨¡å—ç¦»çº¿
+    uint8_t  is_online;        // åœ¨çº¿æ ‡å¿—ï¼š1=åœ¨çº¿ï¼Œ0=ç¦»çº¿ï¼›ç”±DaemonReloadç½®1
+    void    *owner_id;         // æ‹¥æœ‰è€…æŒ‡é’ˆï¼Œæ³¨å†Œæ—¶å¡«å…¥ï¼ˆå¦‚ DJI_Motor_Instance*ï¼‰
 } DaemonInstance;
 
-/* daemon³õÊ¼»¯ÅäÖÃ */
+/* daemonåˆå§‹åŒ–é…ç½® */
 typedef struct
 {
-    uint16_t reload_count;     // Êµ¼ÊÉÏÕâÊÇappÎ¨Ò»ĞèÒªÉèÖÃµÄÖµ?
-    uint16_t init_count;       // ÉÏÏßµÈ´ıÊ±¼ä,ÓĞĞ©Ä£¿éĞèÒªÊÕµ½Ö÷¿ØµÄÖ¸Áî²Å»á·´À¡±¨ÎÄ,»òpcµÈĞèÒª¿ª»úÊ±¼ä
-    offline_callback callback; // Òì³£´¦Àíº¯Êı,µ±Ä£¿é·¢ÉúÒì³£Ê±»á±»µ÷ÓÃ
+    uint16_t reload_count;     // è¶…æ—¶é˜ˆå€¼ï¼Œå•ä½ä¸ºDaemonTaskè°ƒç”¨æ¬¡æ•°
+    uint16_t init_count;       // ä¸Šçº¿ç­‰å¾…æ—¶é—´ï¼ˆé¦–æ¬¡å–‚ç‹—å‰çš„å®½é™å€’è®¡æ•°ï¼Œ0åˆ™ä½¿ç”¨reload_countï¼‰
+    offline_callback callback; // æ‰çº¿å›è°ƒï¼ˆè¾¹æ²¿è§¦å‘ï¼Œæ‰çº¿ç¬é—´è°ƒç”¨ä¸€æ¬¡ï¼‰
 
-    void *owner_id;            // idÈ¡ÓµÓĞdaemonµÄÊµÀıµÄµØÖ·,ÈçDJIMotorInstance*,cast³Évoid*ÀàĞÍ
+    void *owner_id;            // idå–æ‹¥æœ‰daemonçš„å®ä¾‹åœ°å€ï¼Œcastæˆvoid*
 } Daemon_Init_Config_s;
 
 /**
- * @brief ×¢²áÒ»¸ödaemonÊµÀı
- *
- * @param config ³õÊ¼»¯ÅäÖÃ
- * @return DaemonInstance* ·µ»ØÊµÀıÖ¸Õë
+ * @brief æ³¨å†Œä¸€ä¸ªdaemonå®ä¾‹ï¼ˆé™æ€å†…å­˜æ± ï¼Œæ— mallocï¼‰
  */
 DaemonInstance *DaemonRegister(Daemon_Init_Config_s *config);
 
 /**
- * @brief µ±Ä£¿éÊÕµ½ĞÂµÄÊı¾İ»ò½øĞĞÆäËû¶¯×÷Ê±,µ÷ÓÃ¸Ãº¯ÊıÖØÔØtemp_count,Ïàµ±ÓÚ"Î¹¹·"
- *
- * @param instance daemonÊµÀıÖ¸Õë
+ * @brief å–‚ç‹—ï¼šæ¨¡å—æ”¶åˆ°æ–°æ•°æ®æ—¶è°ƒç”¨ï¼Œé‡ç½®è¶…æ—¶è®¡æ•°å¹¶ç½®ä¸ºåœ¨çº¿çŠ¶æ€
  */
 void DaemonReload(DaemonInstance *instance);
 
 /**
- * @brief È·ÈÏÄ£¿éÊÇ·ñÀëÏß
- *
- * @param instance daemonÊµÀıÖ¸Õë
- * @return uint8_t ÈôÔÚÏßÇÒ¹¤×÷Õı³£,·µ»Ø1;·ñÔò·µ»ØÁã. ºóĞø¸ù¾İÒì³£ÀàĞÍºÍÀëÏß×´Ì¬µÈ½øĞĞÓÅ»¯.
+ * @brief æŸ¥è¯¢æ¨¡å—æ˜¯å¦åœ¨çº¿
+ * @return 1=åœ¨çº¿ï¼Œ0=ç¦»çº¿
  */
 uint8_t DaemonIsOnline(DaemonInstance *instance);
 
 /**
- * @brief ·ÅÈërtosÖĞ,»á¸øÃ¿¸ödaemonÊµÀıµÄtemp_count°´ÆµÂÊ½øĞĞµİ¼õ²Ù×÷.
- *        Ä£¿é³É¹¦½ÓÊÜÊı¾İ»ò³É¹¦²Ù×÷Ôò»áÖØÔØtemp_countµÄÖµÎªreload_count.
- *
+ * @brief è½¯ä»¶çœ‹é—¨ç‹—ä¸»ä»»åŠ¡ï¼Œæ”¾å…¥è°ƒåº¦å™¨å®šå‘¨æœŸè°ƒç”¨ï¼ˆæ¨è1msï¼‰
+ *        å¯¹æ¯ä¸ªå®ä¾‹é€’å‡è®¡æ•°ï¼›åœ¨çº¿â†’ç¦»çº¿ç¬é—´è¾¹æ²¿è§¦å‘callbackï¼Œæ­¤åä¸å†é‡å¤
  */
-void DaemonTask();
+void DaemonTask(void);
 
-#endif // !MONITOR_H
+#endif // !DAEMON_H
