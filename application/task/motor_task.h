@@ -6,8 +6,8 @@ extern "C" {
 #endif
 
 #include "main.h"
-#include "module/motor/dm_motor/dm_motor_ctrl.h"
-#include "module/motor/dm_motor/dm_motor_drv.h"
+#include "modules/motor/dm_motor/dm_motor_ctrl.h"
+#include "modules/motor/dm_motor/dm_motor_drv.h"
 #include "bsp/can/bsp_fdcan.h"
 
 void motor_task_init(void);

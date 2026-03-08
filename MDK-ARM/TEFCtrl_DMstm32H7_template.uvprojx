@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_PWR_LDO_SUPPLY,USE_HAL_DRIVER,STM32H723xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../USB_DEVICE/App;../USB_DEVICE/Target;../Drivers/STM32H7xx_HAL_Driver/Inc;../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy;../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;../Drivers/CMSIS/Device/ST/STM32H7xx/Include;../Drivers/CMSIS/Include;../application;../application/bsp;../application/module;../application/task;../application/bsp/usart</IncludePath>
+              <IncludePath>../Core/Inc;../USB_DEVICE/App;../USB_DEVICE/Target;../Drivers/STM32H7xx_HAL_Driver/Inc;../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy;../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;../Drivers/CMSIS/Device/ST/STM32H7xx/Include;../Drivers/CMSIS/Include;../application;../application/bsp;../application/modules;../application/task;../application/bsp/usart</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -683,7 +683,7 @@
         </Group>
         <Group>
           <GroupName>user/bsp</GroupName>
-                                                  <Files>
+                                                            <Files>
             <File>
               <FileName>bsp_system.h</FileName>
               <FileType>5</FileType>
@@ -762,203 +762,203 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>user/module</GroupName>
-                                                  <Files>
+          <GroupName>user/modules</GroupName>
+                                                            <Files>
             <File>
               <FileName>general_def.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\general_def.h</FilePath>
+              <FilePath>..\application\modules\general_def.h</FilePath>
             </File>
             <File>
               <FileName>MahonyAHRS.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\application\module\algorithm\Mahony\MahonyAHRS.c</FilePath>
+              <FilePath>..\application\modules\algorithm\Mahony\MahonyAHRS.c</FilePath>
             </File>
             <File>
               <FileName>MahonyAHRS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\algorithm\Mahony\MahonyAHRS.h</FilePath>
+              <FilePath>..\application\modules\algorithm\Mahony\MahonyAHRS.h</FilePath>
             </File>
             <File>
               <FileName>math.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\application\module\algorithm\math\math.c</FilePath>
+              <FilePath>..\application\modules\algorithm\math\math.c</FilePath>
             </File>
             <File>
               <FileName>math.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\algorithm\math\math.h</FilePath>
+              <FilePath>..\application\modules\algorithm\math\math.h</FilePath>
             </File>
             <File>
               <FileName>pid_plus.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\application\module\algorithm\PID\pid_plus.c</FilePath>
+              <FilePath>..\application\modules\algorithm\PID\pid_plus.c</FilePath>
             </File>
             <File>
               <FileName>pid_plus.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\algorithm\PID\pid_plus.h</FilePath>
+              <FilePath>..\application\modules\algorithm\PID\pid_plus.h</FilePath>
             </File>
             <File>
               <FileName>pid_test_app.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\application\module\algorithm\PID\pid_test_app.c</FilePath>
+              <FilePath>..\application\modules\algorithm\PID\pid_test_app.c</FilePath>
             </File>
             <File>
               <FileName>pid_test_app.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\algorithm\PID\pid_test_app.h</FilePath>
+              <FilePath>..\application\modules\algorithm\PID\pid_test_app.h</FilePath>
             </File>
             <File>
               <FileName>QuaternionEKF.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\application\module\algorithm\_imu\QuaternionEKF.c</FilePath>
+              <FilePath>..\application\modules\algorithm\_imu\QuaternionEKF.c</FilePath>
             </File>
             <File>
               <FileName>QuaternionEKF.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\algorithm\_imu\QuaternionEKF.h</FilePath>
+              <FilePath>..\application\modules\algorithm\_imu\QuaternionEKF.h</FilePath>
             </File>
             <File>
               <FileName>algorithm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\application\module\algorithm\_imu\algorithm.c</FilePath>
+              <FilePath>..\application\modules\algorithm\_imu\algorithm.c</FilePath>
             </File>
             <File>
               <FileName>algorithm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\algorithm\_imu\algorithm.h</FilePath>
+              <FilePath>..\application\modules\algorithm\_imu\algorithm.h</FilePath>
             </File>
             <File>
               <FileName>controller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\application\module\algorithm\_imu\controller.c</FilePath>
+              <FilePath>..\application\modules\algorithm\_imu\controller.c</FilePath>
             </File>
             <File>
               <FileName>controller.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\algorithm\_imu\controller.h</FilePath>
+              <FilePath>..\application\modules\algorithm\_imu\controller.h</FilePath>
             </File>
             <File>
               <FileName>kalman_filter.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\application\module\algorithm\_imu\kalman_filter.c</FilePath>
+              <FilePath>..\application\modules\algorithm\_imu\kalman_filter.c</FilePath>
             </File>
             <File>
               <FileName>kalman_filter.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\algorithm\_imu\kalman_filter.h</FilePath>
+              <FilePath>..\application\modules\algorithm\_imu\kalman_filter.h</FilePath>
             </File>
             <File>
               <FileName>pid.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\application\module\algorithm\_imu\pid.c</FilePath>
+              <FilePath>..\application\modules\algorithm\_imu\pid.c</FilePath>
             </File>
             <File>
               <FileName>pid.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\algorithm\_imu\pid.h</FilePath>
+              <FilePath>..\application\modules\algorithm\_imu\pid.h</FilePath>
             </File>
             <File>
               <FileName>user_lib.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\application\module\algorithm\_imu\user_lib.c</FilePath>
+              <FilePath>..\application\modules\algorithm\_imu\user_lib.c</FilePath>
             </File>
             <File>
               <FileName>user_lib.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\algorithm\_imu\user_lib.h</FilePath>
+              <FilePath>..\application\modules\algorithm\_imu\user_lib.h</FilePath>
             </File>
             <File>
               <FileName>dji_motor.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\application\module\motor\dji_motor\dji_motor.cpp</FilePath>
+              <FilePath>..\application\modules\motor\dji_motor\dji_motor.cpp</FilePath>
             </File>
             <File>
               <FileName>dji_motor.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\motor\dji_motor\dji_motor.h</FilePath>
+              <FilePath>..\application\modules\motor\dji_motor\dji_motor.h</FilePath>
             </File>
             <File>
               <FileName>motor_def.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\motor\dji_motor\motor_def.h</FilePath>
+              <FilePath>..\application\modules\motor\dji_motor\motor_def.h</FilePath>
             </File>
             <File>
               <FileName>snail_c615.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\application\module\motor\dji_motor\snail_c615.cpp</FilePath>
+              <FilePath>..\application\modules\motor\dji_motor\snail_c615.cpp</FilePath>
             </File>
             <File>
               <FileName>snail_c615.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\motor\dji_motor\snail_c615.h</FilePath>
+              <FilePath>..\application\modules\motor\dji_motor\snail_c615.h</FilePath>
             </File>
             <File>
               <FileName>dm_motor.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\application\module\motor\dm_motor\dm_motor.cpp</FilePath>
+              <FilePath>..\application\modules\motor\dm_motor\dm_motor.cpp</FilePath>
             </File>
             <File>
               <FileName>dm_motor.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\motor\dm_motor\dm_motor.h</FilePath>
+              <FilePath>..\application\modules\motor\dm_motor\dm_motor.h</FilePath>
             </File>
             <File>
               <FileName>dm_motor_ctrl.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\application\module\motor\dm_motor\dm_motor_ctrl.c</FilePath>
+              <FilePath>..\application\modules\motor\dm_motor\dm_motor_ctrl.c</FilePath>
             </File>
             <File>
               <FileName>dm_motor_ctrl.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\motor\dm_motor\dm_motor_ctrl.h</FilePath>
+              <FilePath>..\application\modules\motor\dm_motor\dm_motor_ctrl.h</FilePath>
             </File>
             <File>
               <FileName>dm_motor_drv.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\application\module\motor\dm_motor\dm_motor_drv.c</FilePath>
+              <FilePath>..\application\modules\motor\dm_motor\dm_motor_drv.c</FilePath>
             </File>
             <File>
               <FileName>dm_motor_drv.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\motor\dm_motor\dm_motor_drv.h</FilePath>
+              <FilePath>..\application\modules\motor\dm_motor\dm_motor_drv.h</FilePath>
             </File>
             <File>
               <FileName>remoter_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\application\module\remote\remoter_uart.c</FilePath>
+              <FilePath>..\application\modules\remote\remoter_uart.c</FilePath>
             </File>
             <File>
               <FileName>remoter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\remote\remoter_uart.h</FilePath>
+              <FilePath>..\application\modules\remote\remoter_uart.h</FilePath>
             </File>
             <File>
               <FileName>ringbuffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\application\module\ringbuffer\ringbuffer.c</FilePath>
+              <FilePath>..\application\modules\ringbuffer\ringbuffer.c</FilePath>
             </File>
             <File>
               <FileName>ringbuffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\ringbuffer\ringbuffer.h</FilePath>
+              <FilePath>..\application\modules\ringbuffer\ringbuffer.h</FilePath>
             </File>
             <File>
               <FileName>ringbuffer_test.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\application\module\ringbuffer\ringbuffer_test.c</FilePath>
+              <FilePath>..\application\modules\ringbuffer\ringbuffer_test.c</FilePath>
             </File>
             <File>
               <FileName>ringbuffer_test.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\module\ringbuffer\ringbuffer_test.h</FilePath>
+              <FilePath>..\application\modules\ringbuffer\ringbuffer_test.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>user/task</GroupName>
-                                                  <Files>
+                                                            <Files>
             <File>
               <FileName>imu_temp_ctrl.c</FileName>
               <FileType>1</FileType>

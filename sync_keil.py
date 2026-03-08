@@ -4,8 +4,8 @@ sync_keil.py - 自动同步 application/ 目录文件到 Keil .uvprojx
 用法：在项目根目录执行
     python sync_keil.py
 
-效果：扫描 application/bsp、application/module、application/task 三个目录，
-      自动更新 MDK-ARM/*.uvprojx 中 user/bsp、user/module、user/task 三个 Group 的文件列表。
+效果：扫描 application/bsp、application/modules、application/task 三个目录，
+      自动更新 MDK-ARM/*.uvprojx 中 user/bsp、user/modules、user/task 三个 Group 的文件列表。
       新增文件后运行一次即可，无需手动在 Keil GUI 中添加。
 """
 
@@ -21,7 +21,7 @@ UVPROJX = os.path.join(PROJECT_ROOT, "MDK-ARM", "TEFCtrl_DMstm32H7_template.uvpr
 # 扫描目录（相对于项目根目录） → 对应的 Keil Group 名
 SYNC_GROUPS = {
     "application/bsp":  "user/bsp",
-    "application/module":  "user/module",
+    "application/modules":  "user/modules",
     "application/task": "user/task",
 }
 
