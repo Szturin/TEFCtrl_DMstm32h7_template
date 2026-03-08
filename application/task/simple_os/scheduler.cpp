@@ -34,7 +34,8 @@ bool Task::isReadyToRun(uint32_t current_time) const {
     if (!enabled_) {
         return false;
     }
-    return (current_time >= last_time_ + period_ms_);
+    // 用减法判断，正确处理 HAL_GetTick() 的 uint32_t 溢出（~49天）
+    return ((current_time - last_time_) >= period_ms_);
 }
 
 // ==================== Scheduler 类实现 ====================
