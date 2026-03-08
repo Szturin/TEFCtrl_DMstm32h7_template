@@ -8,12 +8,12 @@ test/stm32h7xx_hal_cortex.o: \
   ..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h723xx.h \
   ..\Drivers\CMSIS\Include\core_cm7.h \
   D:\keil5\ARM\ARMCLANG\include\stdint.h \
-  S:\6_rt_thread_project\robomaster\1_DM_stm32h7_project\Test\Drivers\CMSIS\Include\cmsis_version.h \
-  S:\6_rt_thread_project\robomaster\1_DM_stm32h7_project\Test\Drivers\CMSIS\Include\cmsis_compiler.h \
-  S:\6_rt_thread_project\robomaster\1_DM_stm32h7_project\Test\Drivers\CMSIS\Include\cmsis_armclang.h \
+  S:\6_rt_thread_project\0_Robomaster_project\1_DM_stm32h7\0_TEFCtrl_DMstm32H7_template\Drivers\CMSIS\Include\cmsis_version.h \
+  S:\6_rt_thread_project\0_Robomaster_project\1_DM_stm32h7\0_TEFCtrl_DMstm32H7_template\Drivers\CMSIS\Include\cmsis_compiler.h \
+  S:\6_rt_thread_project\0_Robomaster_project\1_DM_stm32h7\0_TEFCtrl_DMstm32H7_template\Drivers\CMSIS\Include\cmsis_armclang.h \
   D:\keil5\ARM\ARMCLANG\include\arm_compat.h \
   D:\keil5\ARM\ARMCLANG\include\arm_acle.h \
-  S:\6_rt_thread_project\robomaster\1_DM_stm32h7_project\Test\Drivers\CMSIS\Include\mpu_armv7.h \
+  S:\6_rt_thread_project\0_Robomaster_project\1_DM_stm32h7\0_TEFCtrl_DMstm32H7_template\Drivers\CMSIS\Include\mpu_armv7.h \
   ..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\system_stm32h7xx.h \
   ..\Drivers\STM32H7xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h \
   D:\keil5\ARM\ARMCLANG\include\stddef.h \

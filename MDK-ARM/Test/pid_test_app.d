@@ -1,6 +1,7 @@
-test/pid_test_app.o: ..\application\app\algorithm\PID\pid_test_app.c \
-  ..\application\app\algorithm\PID\pid_test_app.h \
-  ..\application\bsp\bsp_system.h D:\keil5\ARM\ARMCLANG\include\stdint.h \
+test/pid_test_app.o: ..\application\modules\algorithm\PID\pid_test_app.c \
+  ..\application\modules\algorithm\PID\pid_test_app.h \
+  ..\application\app_link.h D:\keil5\ARM\ARMCLANG\include\stdint.h \
+  D:\keil5\ARM\ARMCLANG\include\stdarg.h \
   D:\keil5\ARM\ARMCLANG\include\stdio.h \
   D:\keil5\ARM\ARMCLANG\include\stdlib.h \
   D:\keil5\ARM\ARMCLANG\include\string.h \
@@ -12,12 +13,12 @@ test/pid_test_app.o: ..\application\app\algorithm\PID\pid_test_app.c \
   ..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h7xx.h \
   ..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h723xx.h \
   ..\Drivers\CMSIS\Include\core_cm7.h \
-  S:\6_rt_thread_project\robomaster\1_DM_stm32h7_project\Test\Drivers\CMSIS\Include\cmsis_version.h \
-  S:\6_rt_thread_project\robomaster\1_DM_stm32h7_project\Test\Drivers\CMSIS\Include\cmsis_compiler.h \
-  S:\6_rt_thread_project\robomaster\1_DM_stm32h7_project\Test\Drivers\CMSIS\Include\cmsis_armclang.h \
+  S:\6_rt_thread_project\0_Robomaster_project\1_DM_stm32h7\0_TEFCtrl_DMstm32H7_template\Drivers\CMSIS\Include\cmsis_version.h \
+  S:\6_rt_thread_project\0_Robomaster_project\1_DM_stm32h7\0_TEFCtrl_DMstm32H7_template\Drivers\CMSIS\Include\cmsis_compiler.h \
+  S:\6_rt_thread_project\0_Robomaster_project\1_DM_stm32h7\0_TEFCtrl_DMstm32H7_template\Drivers\CMSIS\Include\cmsis_armclang.h \
   D:\keil5\ARM\ARMCLANG\include\arm_compat.h \
   D:\keil5\ARM\ARMCLANG\include\arm_acle.h \
-  S:\6_rt_thread_project\robomaster\1_DM_stm32h7_project\Test\Drivers\CMSIS\Include\mpu_armv7.h \
+  S:\6_rt_thread_project\0_Robomaster_project\1_DM_stm32h7\0_TEFCtrl_DMstm32H7_template\Drivers\CMSIS\Include\mpu_armv7.h \
   ..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\system_stm32h7xx.h \
   ..\Drivers\STM32H7xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h \
   D:\keil5\ARM\ARMCLANG\include\stddef.h \
@@ -50,10 +51,13 @@ test/pid_test_app.o: ..\application\app\algorithm\PID\pid_test_app.c \
   ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_pcd.h \
   ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_ll_usb.h \
   ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_pcd_ex.h \
-  ..\Core\Inc\main.h ..\Core\Inc\stm32h7xx_it.h ..\Core\Inc\memorymap.h \
-  ..\Core\Inc\usart.h ..\Core\Inc\gpio.h \
-  D:\keil5\ARM\ARMCLANG\include\stdarg.h \
-  ..\application\bsp\can\bsp_fdcan.h ..\Core\Inc\fdcan.h \
-  ..\application\task\uart_task.h ..\application\task\motor_task.h \
-  ..\application\app\motor\dm_motor\dm_motor_ctrl.h \
-  ..\application\app\motor\dm_motor\dm_motor_drv.h
+  ..\Core\Inc\main.h ..\Core\Inc\memorymap.h ..\Core\Inc\usart.h \
+  ..\Core\Inc\gpio.h ..\application\bsp\can\bsp_fdcan.h \
+  ..\Core\Inc\fdcan.h ..\application\bsp\delay\delay.h \
+  ..\application\bsp\dwt\bsp_dwt.h \
+  ..\application\modules\remote\remoter_uart.h \
+  ..\application\modules\ringbuffer\ringbuffer.h \
+  D:\keil5\ARM\ARMCLANG\include\assert.h \
+  ..\application\modules\daemon\daemon.h \
+  ..\application\modules\referee\referee_protocol.h \
+  ..\application\modules\referee\rm_referee.h

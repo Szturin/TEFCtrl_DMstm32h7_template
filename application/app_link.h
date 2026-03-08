@@ -31,8 +31,6 @@
 #include "modules/remote/remoter_uart.h"
 #include "modules/ringbuffer/ringbuffer.h"
 #include "modules/daemon/daemon.h"
-#include "modules/referee/referee_protocol.h"
-#include "modules/referee/rm_referee.h"
 
 /* --- C++ 专用（含 class 的头文件）--- */
 #ifdef __cplusplus

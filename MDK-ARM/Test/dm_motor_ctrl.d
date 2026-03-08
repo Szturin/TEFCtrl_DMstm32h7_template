@@ -1,6 +1,7 @@
-test/dm_motor_ctrl.o: ..\application\app\motor\dm_motor\dm_motor_ctrl.c \
-  ..\application\app\motor\dm_motor\dm_motor_drv.h ..\Core\Inc\main.h \
-  ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal.h \
+test/dm_motor_ctrl.o: \
+  ..\application\modules\motor\dm_motor\dm_motor_ctrl.c \
+  ..\application\modules\motor\dm_motor\dm_motor_drv.h \
+  ..\Core\Inc\main.h ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal.h \
   ..\Core\Inc\stm32h7xx_hal_conf.h \
   ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_rcc.h \
   ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_def.h \
@@ -8,12 +9,12 @@ test/dm_motor_ctrl.o: ..\application\app\motor\dm_motor\dm_motor_ctrl.c \
   ..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h723xx.h \
   ..\Drivers\CMSIS\Include\core_cm7.h \
   D:\keil5\ARM\ARMCLANG\include\stdint.h \
-  S:\6_rt_thread_project\robomaster\1_DM_stm32h7_project\Test\Drivers\CMSIS\Include\cmsis_version.h \
-  S:\6_rt_thread_project\robomaster\1_DM_stm32h7_project\Test\Drivers\CMSIS\Include\cmsis_compiler.h \
-  S:\6_rt_thread_project\robomaster\1_DM_stm32h7_project\Test\Drivers\CMSIS\Include\cmsis_armclang.h \
+  S:\6_rt_thread_project\0_Robomaster_project\1_DM_stm32h7\0_TEFCtrl_DMstm32H7_template\Drivers\CMSIS\Include\cmsis_version.h \
+  S:\6_rt_thread_project\0_Robomaster_project\1_DM_stm32h7\0_TEFCtrl_DMstm32H7_template\Drivers\CMSIS\Include\cmsis_compiler.h \
+  S:\6_rt_thread_project\0_Robomaster_project\1_DM_stm32h7\0_TEFCtrl_DMstm32H7_template\Drivers\CMSIS\Include\cmsis_armclang.h \
   D:\keil5\ARM\ARMCLANG\include\arm_compat.h \
   D:\keil5\ARM\ARMCLANG\include\arm_acle.h \
-  S:\6_rt_thread_project\robomaster\1_DM_stm32h7_project\Test\Drivers\CMSIS\Include\mpu_armv7.h \
+  S:\6_rt_thread_project\0_Robomaster_project\1_DM_stm32h7\0_TEFCtrl_DMstm32H7_template\Drivers\CMSIS\Include\mpu_armv7.h \
   ..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\system_stm32h7xx.h \
   ..\Drivers\STM32H7xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h \
   D:\keil5\ARM\ARMCLANG\include\stddef.h \
@@ -48,6 +49,6 @@ test/dm_motor_ctrl.o: ..\application\app\motor\dm_motor\dm_motor_ctrl.c \
   ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_ll_usb.h \
   ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_pcd_ex.h \
   ..\Core\Inc\fdcan.h ..\application\bsp\can\bsp_fdcan.h \
-  ..\application\app\motor\dm_motor\dm_motor_ctrl.h \
+  ..\application\modules\motor\dm_motor\dm_motor_ctrl.h \
   D:\keil5\ARM\ARMCLANG\include\string.h \
   D:\keil5\ARM\ARMCLANG\include\stdbool.h

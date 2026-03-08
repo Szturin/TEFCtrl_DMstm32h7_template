@@ -4,6 +4,12 @@
 #include "usart.h"
 #include "referee_protocol.h"
 
+/* 底盘/发射/摩擦轮模式枚举，使用时可在 task 层重定义覆盖 */
+typedef enum { CHASSIS_ZERO_FORCE=0, CHASSIS_FREE, CHASSIS_ROTATE, CHASSIS_FOLLOW_GIMBAL_YAW } chassis_mode_e;
+typedef enum { OFF=0, VISION_MODE, FREE_MODE } shoot_mode_e;
+typedef enum { FRICTION_OFF=0, FRICTION_ON } friction_mode_e;
+typedef struct { float chassis_power_mx; float chassis_buffer_energy; } Chassis_Power_Data_s;
+
 extern uint8_t UI_Seq;
 #define RE_RX_BUFFER_SIZE 255u // 裁判系统接收缓冲区大小
 

@@ -21,17 +21,509 @@ Target DLL:      CMSIS_AGDI.dll V1.33.16.0
 Dialog DLL:      TCM.DLL V1.56.4.0
  
 <h2>Project:</h2>
-S:\6_rt_thread_project\robomaster\1_DM_stm32h7_project\Test\MDK-ARM\TEFCtrl_DMstm32H7_template.uvprojx
-Project File Date:  01/10/2026
+S:\6_rt_thread_project\0_Robomaster_project\1_DM_stm32h7\0_TEFCtrl_DMstm32H7_template\MDK-ARM\TEFCtrl_DMstm32H7_template.uvprojx
+Project File Date:  03/08/2026
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.21', folder: 'D:\keil5\ARM\ARMCLANG\Bin'
 Build target 'TEFCtrl_DMstm32H7_template'
+ArmClang: error: no such file or directory: '../Core/Src/stm32h7xx_hal_timebase_tim.c'
+ArmClang: error: no input files
+compiling stm32h7xx_hal_timebase_tim.c...
+compiling adc.c...
+compiling spi.c...
+compiling usart.c...
+compiling stm32h7xx_hal_msp.c...
+compiling stm32h7xx_it.c...
+compiling gpio.c...
+compiling dma.c...
+compiling octospi.c...
 compiling main.c...
-linking...
-Program Size: Code=60162 RO-data=1686 RW-data=256 ZI-data=15432  
-FromELF: creating hex file...
-"Test\TEFCtrl_DMstm32H7_template.axf" - 0 Error(s), 0 Warning(s).
+compiling memorymap.c...
+compiling usb_device.c...
+compiling tim.c...
+compiling fdcan.c...
+compiling usbd_desc.c...
+../application/app_main.cpp(14): warning: In file included from...
+../application/task/uart_task.h(8): warning: In file included from...
+../application/modules\remote/remoter_uart.h(4): warning: In file included from...
+../application\app_link.h(35): warning: In file included from...
+../application/modules/referee/rm_referee.h(83): error: unknown type name 'chassis_mode_e'
+   83 |         chassis_mode_e chassis_mode;                     // 底盘模式
+      |         ^
+../application/modules/referee/rm_referee.h(84): error: unknown type name 'shoot_mode_e'
+   84 |         shoot_mode_e shoot_mode;                                 // 发射模式设置
+      |         ^
+../application/modules/referee/rm_referee.h(85): error: unknown type name 'friction_mode_e'
+   85 |         friction_mode_e friction_mode;                   // 摩擦轮关闭
+      |         ^
+../application/modules/referee/rm_referee.h(86): error: unknown type name 'Chassis_Power_Data_s'
+   86 |         Chassis_Power_Data_s Chassis_Power_Data; // 功率控制
+      |         ^
+../application/modules/referee/rm_referee.h(89): error: unknown type name 'chassis_mode_e'
+   89 |         chassis_mode_e chassis_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(91): error: unknown type name 'shoot_mode_e'
+   91 |         shoot_mode_e shoot_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(92): error: unknown type name 'friction_mode_e'
+   92 |         friction_mode_e friction_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(93): error: unknown type name 'Chassis_Power_Data_s'
+   93 |         Chassis_Power_Data_s Chassis_last_Power_Data;
+      |         ^
+8 errors generated.
+compiling app_main.cpp...
+compiling stm32h7xx_hal_pcd.c...
+compiling usbd_cdc_if.c...
+compiling stm32h7xx_hal_tim_ex.c...
+compiling stm32h7xx_hal_pcd_ex.c...
+compiling usbd_conf.c...
+compiling stm32h7xx_ll_usb.c...
+compiling stm32h7xx_hal_flash.c...
+compiling stm32h7xx_hal_rcc.c...
+compiling stm32h7xx_hal_hsem.c...
+compiling stm32h7xx_hal_rcc_ex.c...
+compiling stm32h7xx_hal_tim.c...
+compiling stm32h7xx_hal_flash_ex.c...
+compiling stm32h7xx_hal_gpio.c...
+compiling stm32h7xx_hal_dma.c...
+compiling stm32h7xx_hal_pwr.c...
+compiling stm32h7xx_hal_pwr_ex.c...
+compiling stm32h7xx_hal_dma_ex.c...
+compiling stm32h7xx_hal_cortex.c...
+compiling stm32h7xx_hal.c...
+compiling stm32h7xx_hal_mdma.c...
+compiling stm32h7xx_hal_i2c_ex.c...
+compiling stm32h7xx_hal_exti.c...
+compiling stm32h7xx_hal_adc.c...
+compiling stm32h7xx_hal_fdcan.c...
+compiling stm32h7xx_hal_spi_ex.c...
+compiling stm32h7xx_hal_i2c.c...
+compiling stm32h7xx_hal_ospi.c...
+compiling stm32h7xx_hal_adc_ex.c...
+compiling stm32h7xx_hal_uart_ex.c...
+compiling stm32h7xx_hal_spi.c...
+compiling system_stm32h7xx.c...
+compiling stm32h7xx_hal_uart.c...
+compiling usbd_core.c...
+compiling usbd_ctlreq.c...
+compiling usbd_ioreq.c...
+compiling usbd_cdc.c...
+compiling BMI088Middleware.c...
+compiling BMI088driver.c...
+compiling bsp_fdcan.c...
+compiling math.c...
+compiling delay.c...
+compiling bsp_dwt.c...
+../application/modules/algorithm/Mahony/MahonyAHRS.c(12): error: 'arm_math.h' file not found
+   12 | #include "arm_math.h"
+      |          ^~~~~~~~~~~~
+1 error generated.
+compiling MahonyAHRS.c...
+compiling bsp_usart.cpp...
+../application/modules/algorithm/_imu/QuaternionEKF.c(16): warning: In file included from...
+../application/modules/algorithm/_imu/QuaternionEKF.h(15): warning: In file included from...
+../application/modules/algorithm/_imu/kalman_filter.h(32): error: 'arm_math.h' file not found
+   32 | #include "arm_math.h"
+      |          ^~~~~~~~~~~~
+1 error generated.
+compiling QuaternionEKF.c...
+../application/modules/algorithm/PID/pid_plus.c(1): warning: In file included from...
+../application/modules/algorithm/PID/pid_plus.h(8): warning: In file included from...
+../application\app_link.h(35): warning: In file included from...
+../application/modules/referee/rm_referee.h(83): error: unknown type name 'chassis_mode_e'
+   83 |         chassis_mode_e chassis_mode;                     // 底盘模式
+      |         ^
+../application/modules/referee/rm_referee.h(84): error: unknown type name 'shoot_mode_e'
+   84 |         shoot_mode_e shoot_mode;                                 // 发射模式设置
+      |         ^
+../application/modules/referee/rm_referee.h(85): error: unknown type name 'friction_mode_e'
+   85 |         friction_mode_e friction_mode;                   // 摩擦轮关闭
+      |         ^
+../application/modules/referee/rm_referee.h(86): error: unknown type name 'Chassis_Power_Data_s'
+   86 |         Chassis_Power_Data_s Chassis_Power_Data; // 功率控制
+      |         ^
+../application/modules/referee/rm_referee.h(89): error: unknown type name 'chassis_mode_e'
+   89 |         chassis_mode_e chassis_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(91): error: unknown type name 'shoot_mode_e'
+   91 |         shoot_mode_e shoot_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(92): error: unknown type name 'friction_mode_e'
+   92 |         friction_mode_e friction_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(93): error: unknown type name 'Chassis_Power_Data_s'
+   93 |         Chassis_Power_Data_s Chassis_last_Power_Data;
+      |         ^
+8 errors generated.
+compiling pid_plus.c...
+../application/modules/algorithm/PID/pid_test_app.c(1): warning: In file included from...
+../application/modules/algorithm/PID/pid_test_app.h(9): warning: In file included from...
+../application\app_link.h(35): warning: In file included from...
+../application/modules/referee/rm_referee.h(83): error: unknown type name 'chassis_mode_e'
+   83 |         chassis_mode_e chassis_mode;                     // 底盘模式
+      |         ^
+../application/modules/referee/rm_referee.h(84): error: unknown type name 'shoot_mode_e'
+   84 |         shoot_mode_e shoot_mode;                                 // 发射模式设置
+      |         ^
+../application/modules/referee/rm_referee.h(85): error: unknown type name 'friction_mode_e'
+   85 |         friction_mode_e friction_mode;                   // 摩擦轮关闭
+      |         ^
+../application/modules/referee/rm_referee.h(86): error: unknown type name 'Chassis_Power_Data_s'
+   86 |         Chassis_Power_Data_s Chassis_Power_Data; // 功率控制
+      |         ^
+../application/modules/referee/rm_referee.h(89): error: unknown type name 'chassis_mode_e'
+   89 |         chassis_mode_e chassis_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(91): error: unknown type name 'shoot_mode_e'
+   91 |         shoot_mode_e shoot_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(92): error: unknown type name 'friction_mode_e'
+   92 |         friction_mode_e friction_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(93): error: unknown type name 'Chassis_Power_Data_s'
+   93 |         Chassis_Power_Data_s Chassis_last_Power_Data;
+      |         ^
+8 errors generated.
+compiling pid_test_app.c...
+../application/modules/algorithm/_imu/kalman_filter.c(129): warning: In file included from...
+../application/modules/algorithm/_imu/kalman_filter.h(32): error: 'arm_math.h' file not found
+   32 | #include "arm_math.h"
+      |          ^~~~~~~~~~~~
+1 error generated.
+compiling kalman_filter.c...
+../application/modules/algorithm/_imu/algorithm.c(2): warning: In file included from...
+../application/modules/algorithm/_imu/kalman_filter.h(32): error: 'arm_math.h' file not found
+   32 | #include "arm_math.h"
+      |          ^~~~~~~~~~~~
+1 error generated.
+compiling algorithm.c...
+compiling controller.c...
+compiling pid.c...
+../application/modules/daemon/daemon.c(3): error: 'memory.h' file not found
+    3 | #include "memory.h"
+      |          ^~~~~~~~~~
+1 error generated.
+compiling daemon.c...
+compiling user_lib.c...
+compiling dm_motor_ctrl.c...
+compiling crc_ref.c...
+compiling dji_motor.cpp...
+compiling dm_motor_drv.c...
+../application/modules/motor/dji_motor/snail_c615.cpp(5): warning: In file included from...
+../application/modules/motor/dji_motor/snail_c615.h(7): warning: In file included from...
+../application\app_link.h(35): warning: In file included from...
+../application/modules/referee/rm_referee.h(83): error: unknown type name 'chassis_mode_e'
+   83 |         chassis_mode_e chassis_mode;                     // 底盘模式
+      |         ^
+../application/modules/referee/rm_referee.h(84): error: unknown type name 'shoot_mode_e'
+   84 |         shoot_mode_e shoot_mode;                                 // 发射模式设置
+      |         ^
+../application/modules/referee/rm_referee.h(85): error: unknown type name 'friction_mode_e'
+   85 |         friction_mode_e friction_mode;                   // 摩擦轮关闭
+      |         ^
+../application/modules/referee/rm_referee.h(86): error: unknown type name 'Chassis_Power_Data_s'
+   86 |         Chassis_Power_Data_s Chassis_Power_Data; // 功率控制
+      |         ^
+../application/modules/referee/rm_referee.h(89): error: unknown type name 'chassis_mode_e'
+   89 |         chassis_mode_e chassis_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(91): error: unknown type name 'shoot_mode_e'
+   91 |         shoot_mode_e shoot_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(92): error: unknown type name 'friction_mode_e'
+   92 |         friction_mode_e friction_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(93): error: unknown type name 'Chassis_Power_Data_s'
+   93 |         Chassis_Power_Data_s Chassis_last_Power_Data;
+      |         ^
+8 errors generated.
+compiling snail_c615.cpp...
+../application/modules/referee/referee_UI.c(1): warning: In file included from...
+../application/modules/referee/referee_UI.h(7): warning: In file included from...
+../application/modules/referee/rm_referee.h(83): error: unknown type name 'chassis_mode_e'
+   83 |         chassis_mode_e chassis_mode;                     // 底盘模式
+      |         ^
+../application/modules/referee/rm_referee.h(84): error: unknown type name 'shoot_mode_e'
+   84 |         shoot_mode_e shoot_mode;                                 // 发射模式设置
+      |         ^
+../application/modules/referee/rm_referee.h(85): error: unknown type name 'friction_mode_e'
+   85 |         friction_mode_e friction_mode;                   // 摩擦轮关闭
+      |         ^
+../application/modules/referee/rm_referee.h(86): error: unknown type name 'Chassis_Power_Data_s'
+   86 |         Chassis_Power_Data_s Chassis_Power_Data; // 功率控制
+      |         ^
+../application/modules/referee/rm_referee.h(89): error: unknown type name 'chassis_mode_e'
+   89 |         chassis_mode_e chassis_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(91): error: unknown type name 'shoot_mode_e'
+   91 |         shoot_mode_e shoot_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(92): error: unknown type name 'friction_mode_e'
+   92 |         friction_mode_e friction_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(93): error: unknown type name 'Chassis_Power_Data_s'
+   93 |         Chassis_Power_Data_s Chassis_last_Power_Data;
+      |         ^
+8 errors generated.
+compiling referee_UI.c...
+../application/modules/motor/dm_motor/dm_motor.cpp(4): warning: In file included from...
+../application/modules/motor/dm_motor/dm_motor.h(8): warning: In file included from...
+../application\app_link.h(35): warning: In file included from...
+../application/modules/referee/rm_referee.h(83): error: unknown type name 'chassis_mode_e'
+   83 |         chassis_mode_e chassis_mode;                     // 底盘模式
+      |         ^
+../application/modules/referee/rm_referee.h(84): error: unknown type name 'shoot_mode_e'
+   84 |         shoot_mode_e shoot_mode;                                 // 发射模式设置
+      |         ^
+../application/modules/referee/rm_referee.h(85): error: unknown type name 'friction_mode_e'
+   85 |         friction_mode_e friction_mode;                   // 摩擦轮关闭
+      |         ^
+../application/modules/referee/rm_referee.h(86): error: unknown type name 'Chassis_Power_Data_s'
+   86 |         Chassis_Power_Data_s Chassis_Power_Data; // 功率控制
+      |         ^
+../application/modules/referee/rm_referee.h(89): error: unknown type name 'chassis_mode_e'
+   89 |         chassis_mode_e chassis_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(91): error: unknown type name 'shoot_mode_e'
+   91 |         shoot_mode_e shoot_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(92): error: unknown type name 'friction_mode_e'
+   92 |         friction_mode_e friction_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(93): error: unknown type name 'Chassis_Power_Data_s'
+   93 |         Chassis_Power_Data_s Chassis_last_Power_Data;
+      |         ^
+8 errors generated.
+compiling dm_motor.cpp...
+../application/modules/referee/referee_task.c(1): warning: In file included from...
+../application/modules/referee/referee_task.h(4): warning: In file included from...
+../application/modules/referee/rm_referee.h(83): error: unknown type name 'chassis_mode_e'
+   83 |         chassis_mode_e chassis_mode;                     // 底盘模式
+      |         ^
+../application/modules/referee/rm_referee.h(84): error: unknown type name 'shoot_mode_e'
+   84 |         shoot_mode_e shoot_mode;                                 // 发射模式设置
+      |         ^
+../application/modules/referee/rm_referee.h(85): error: unknown type name 'friction_mode_e'
+   85 |         friction_mode_e friction_mode;                   // 摩擦轮关闭
+      |         ^
+../application/modules/referee/rm_referee.h(86): error: unknown type name 'Chassis_Power_Data_s'
+   86 |         Chassis_Power_Data_s Chassis_Power_Data; // 功率控制
+      |         ^
+../application/modules/referee/rm_referee.h(89): error: unknown type name 'chassis_mode_e'
+   89 |         chassis_mode_e chassis_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(91): error: unknown type name 'shoot_mode_e'
+   91 |         shoot_mode_e shoot_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(92): error: unknown type name 'friction_mode_e'
+   92 |         friction_mode_e friction_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(93): error: unknown type name 'Chassis_Power_Data_s'
+   93 |         Chassis_Power_Data_s Chassis_last_Power_Data;
+      |         ^
+../application/modules/referee/referee_task.c(36): error: call to undeclared function 'LOGINFO'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   36 |     LOGINFO("TEF-UI INIT %d",referee_info->init_flag);
+      |     ^
+../application/modules/referee/referee_task.c(57): error: use of undeclared identifier 'keyboard_value'
+   57 |     if(keyboard_value & 0x0040){ // 'Q'键
+      |        ^
+../application/modules/referee/referee_task.c(59): error: call to undeclared function 'LOGINFO'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   59 |         LOGINFO("refresh ui");
+      |         ^
+../application/modules/referee/referee_task.c(83): error: call to undeclared function 'LOGERROR'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   83 |             LOGERROR("NO REFREE INIT");
+      |             ^
+../application/modules/referee/referee_task.c(86): error: call to undeclared function 'rt_thread_mdelay'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   86 |             rt_thread_mdelay(100); // 若还未收到裁判系统数据,等待一段时间后再检查
+      |             ^
+../application/modules/referee/referee_task.c(165): error: use of undeclared identifier 'CHASSIS_FREE'
+  165 |         _Interactive_data->chassis_mode = CHASSIS_FREE;
+      |                                           ^
+../application/modules/referee/referee_task.c(166): error: use of undeclared identifier 'OFF'
+  166 |         _Interactive_data->shoot_mode = OFF;
+      |                                         ^
+../application/modules/referee/referee_task.c(167): error: use of undeclared identifier 'FRICTION_OFF'
+  167 |         _Interactive_data->friction_mode = FRICTION_OFF;
+      |                                            ^
+../application/modules/referee/referee_task.c(175): error: use of undeclared identifier 'CHASSIS_ROTATE'
+  175 |         _Interactive_data->chassis_mode = CHASSIS_ROTATE;
+      |                                           ^
+../application/modules/referee/referee_task.c(176): error: use of undeclared identifier 'OFF'
+  176 |         _Interactive_data->shoot_mode = OFF;
+      |                                         ^
+../application/modules/referee/referee_task.c(177): error: use of undeclared identifier 'FRICTION_OFF'
+  177 |         _Interactive_data->friction_mode = FRICTION_OFF;
+      |                                            ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling referee_task.c...
+../application/modules/remote/remoter_uart.c(1): warning: In file included from...
+../application\app_link.h(35): warning: In file included from...
+../application/modules/referee/rm_referee.h(83): error: unknown type name 'chassis_mode_e'
+   83 |         chassis_mode_e chassis_mode;                     // 底盘模式
+      |         ^
+../application/modules/referee/rm_referee.h(84): error: unknown type name 'shoot_mode_e'
+   84 |         shoot_mode_e shoot_mode;                                 // 发射模式设置
+      |         ^
+../application/modules/referee/rm_referee.h(85): error: unknown type name 'friction_mode_e'
+   85 |         friction_mode_e friction_mode;                   // 摩擦轮关闭
+      |         ^
+../application/modules/referee/rm_referee.h(86): error: unknown type name 'Chassis_Power_Data_s'
+   86 |         Chassis_Power_Data_s Chassis_Power_Data; // 功率控制
+      |         ^
+../application/modules/referee/rm_referee.h(89): error: unknown type name 'chassis_mode_e'
+   89 |         chassis_mode_e chassis_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(91): error: unknown type name 'shoot_mode_e'
+   91 |         shoot_mode_e shoot_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(92): error: unknown type name 'friction_mode_e'
+   92 |         friction_mode_e friction_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(93): error: unknown type name 'Chassis_Power_Data_s'
+   93 |         Chassis_Power_Data_s Chassis_last_Power_Data;
+      |         ^
+../application/modules/remote/remoter_uart.c(64): error: use of undeclared identifier 'uart5_rx_dma_buffer'
+   64 |     HAL_UARTEx_ReceiveToIdle_DMA(&huart5, uart5_rx_dma_buffer, sizeof(uart5_rx_dma_buffer));
+      |                                                                       ^
+../application/modules/remote/remoter_uart.c(64): error: use of undeclared identifier 'uart5_rx_dma_buffer'
+   64 |     HAL_UARTEx_ReceiveToIdle_DMA(&huart5, uart5_rx_dma_buffer, sizeof(uart5_rx_dma_buffer));
+      |                                           ^
+10 errors generated.
+compiling remoter_uart.c...
+../application/modules/referee/rm_referee.c(1): warning: In file included from...
+../application/modules/referee/rm_referee.h(83): error: unknown type name 'chassis_mode_e'
+   83 |         chassis_mode_e chassis_mode;                     // 底盘模式
+      |         ^
+../application/modules/referee/rm_referee.h(84): error: unknown type name 'shoot_mode_e'
+   84 |         shoot_mode_e shoot_mode;                                 // 发射模式设置
+      |         ^
+../application/modules/referee/rm_referee.h(85): error: unknown type name 'friction_mode_e'
+   85 |         friction_mode_e friction_mode;                   // 摩擦轮关闭
+      |         ^
+../application/modules/referee/rm_referee.h(86): error: unknown type name 'Chassis_Power_Data_s'
+   86 |         Chassis_Power_Data_s Chassis_Power_Data; // 功率控制
+      |         ^
+../application/modules/referee/rm_referee.h(89): error: unknown type name 'chassis_mode_e'
+   89 |         chassis_mode_e chassis_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(91): error: unknown type name 'shoot_mode_e'
+   91 |         shoot_mode_e shoot_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(92): error: unknown type name 'friction_mode_e'
+   92 |         friction_mode_e friction_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(93): error: unknown type name 'Chassis_Power_Data_s'
+   93 |         Chassis_Power_Data_s Chassis_last_Power_Data;
+      |         ^
+../application/modules/referee/rm_referee.c(6): error: 'daemon.h' file not found
+    6 | #include "daemon.h"
+      |          ^~~~~~~~~~
+9 errors generated.
+compiling rm_referee.c...
+compiling ringbuffer.c...
+../application/task/imu_temp_ctrl.c(1): warning: In file included from...
+../application/task/imu_temp_ctrl.h(9): warning: In file included from...
+../application/modules\algorithm/_imu/kalman_filter.h(32): error: 'arm_math.h' file not found
+   32 | #include "arm_math.h"
+      |          ^~~~~~~~~~~~
+1 error generated.
+compiling imu_temp_ctrl.c...
+../application/modules/ringbuffer/ringbuffer_test.c(1): warning: In file included from...
+../application/modules/ringbuffer/ringbuffer_test.h(9): warning: In file included from...
+../application\app_link.h(35): warning: In file included from...
+../application/modules/referee/rm_referee.h(83): error: unknown type name 'chassis_mode_e'
+   83 |         chassis_mode_e chassis_mode;                     // 底盘模式
+      |         ^
+../application/modules/referee/rm_referee.h(84): error: unknown type name 'shoot_mode_e'
+   84 |         shoot_mode_e shoot_mode;                                 // 发射模式设置
+      |         ^
+../application/modules/referee/rm_referee.h(85): error: unknown type name 'friction_mode_e'
+   85 |         friction_mode_e friction_mode;                   // 摩擦轮关闭
+      |         ^
+../application/modules/referee/rm_referee.h(86): error: unknown type name 'Chassis_Power_Data_s'
+   86 |         Chassis_Power_Data_s Chassis_Power_Data; // 功率控制
+      |         ^
+../application/modules/referee/rm_referee.h(89): error: unknown type name 'chassis_mode_e'
+   89 |         chassis_mode_e chassis_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(91): error: unknown type name 'shoot_mode_e'
+   91 |         shoot_mode_e shoot_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(92): error: unknown type name 'friction_mode_e'
+   92 |         friction_mode_e friction_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(93): error: unknown type name 'Chassis_Power_Data_s'
+   93 |         Chassis_Power_Data_s Chassis_last_Power_Data;
+      |         ^
+8 errors generated.
+compiling ringbuffer_test.c...
+compiling scheduler.cpp...
+../application/task/motor_task.cpp(4): warning: In file included from...
+../application/modules\motor/dm_motor/dm_motor.h(8): warning: In file included from...
+../application\app_link.h(35): warning: In file included from...
+../application/modules/referee/rm_referee.h(83): error: unknown type name 'chassis_mode_e'
+   83 |         chassis_mode_e chassis_mode;                     // 底盘模式
+      |         ^
+../application/modules/referee/rm_referee.h(84): error: unknown type name 'shoot_mode_e'
+   84 |         shoot_mode_e shoot_mode;                                 // 发射模式设置
+      |         ^
+../application/modules/referee/rm_referee.h(85): error: unknown type name 'friction_mode_e'
+   85 |         friction_mode_e friction_mode;                   // 摩擦轮关闭
+      |         ^
+../application/modules/referee/rm_referee.h(86): error: unknown type name 'Chassis_Power_Data_s'
+   86 |         Chassis_Power_Data_s Chassis_Power_Data; // 功率控制
+      |         ^
+../application/modules/referee/rm_referee.h(89): error: unknown type name 'chassis_mode_e'
+   89 |         chassis_mode_e chassis_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(91): error: unknown type name 'shoot_mode_e'
+   91 |         shoot_mode_e shoot_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(92): error: unknown type name 'friction_mode_e'
+   92 |         friction_mode_e friction_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(93): error: unknown type name 'Chassis_Power_Data_s'
+   93 |         Chassis_Power_Data_s Chassis_last_Power_Data;
+      |         ^
+8 errors generated.
+compiling motor_task.cpp...
+../application/task/uart_task.cpp(1): warning: In file included from...
+../application/task/uart_task.h(8): warning: In file included from...
+../application/modules\remote/remoter_uart.h(4): warning: In file included from...
+../application\app_link.h(35): warning: In file included from...
+../application/modules/referee/rm_referee.h(83): error: unknown type name 'chassis_mode_e'
+   83 |         chassis_mode_e chassis_mode;                     // 底盘模式
+      |         ^
+../application/modules/referee/rm_referee.h(84): error: unknown type name 'shoot_mode_e'
+   84 |         shoot_mode_e shoot_mode;                                 // 发射模式设置
+      |         ^
+../application/modules/referee/rm_referee.h(85): error: unknown type name 'friction_mode_e'
+   85 |         friction_mode_e friction_mode;                   // 摩擦轮关闭
+      |         ^
+../application/modules/referee/rm_referee.h(86): error: unknown type name 'Chassis_Power_Data_s'
+   86 |         Chassis_Power_Data_s Chassis_Power_Data; // 功率控制
+      |         ^
+../application/modules/referee/rm_referee.h(89): error: unknown type name 'chassis_mode_e'
+   89 |         chassis_mode_e chassis_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(91): error: unknown type name 'shoot_mode_e'
+   91 |         shoot_mode_e shoot_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(92): error: unknown type name 'friction_mode_e'
+   92 |         friction_mode_e friction_last_mode;
+      |         ^
+../application/modules/referee/rm_referee.h(93): error: unknown type name 'Chassis_Power_Data_s'
+   93 |         Chassis_Power_Data_s Chassis_last_Power_Data;
+      |         ^
+../application/task/uart_task.cpp(3): error: unknown type name 'ringbuffer_t'
+    3 | static  ringbuffer_t rb_uart5;// 定义串口6的环形缓冲区
+      |         ^
+9 errors generated.
+compiling uart_task.cpp...
+"Test\TEFCtrl_DMstm32H7_template.axf" - 119 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -54,7 +546,8 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE@5.6.0
       Include file:  CMSIS/Core/Include/tz_context.h
-Build Time Elapsed:  00:00:07
+Target not created.
+Build Time Elapsed:  00:00:17
 </pre>
 </body>
 </html>

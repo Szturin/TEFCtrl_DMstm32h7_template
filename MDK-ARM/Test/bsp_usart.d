@@ -1,14 +1,25 @@
 test/bsp_usart.o: ..\application\bsp\usart\bsp_usart.cpp \
-  ..\application\bsp\usart\bsp_usart.h ..\application\bsp\bsp_system.h \
+  ..\application\bsp\usart\bsp_usart.h \
+  ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal.h \
+  ..\Core\Inc\stm32h7xx_hal_conf.h \
+  ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_rcc.h \
+  ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_def.h \
+  ..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h7xx.h \
+  ..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h723xx.h \
+  ..\Drivers\CMSIS\Include\core_cm7.h \
   D:\keil5\ARM\ARMCLANG\include\libcxx\stdint.h \
   D:\keil5\ARM\ARMCLANG\include\libcxx\__config \
   D:\keil5\ARM\ARMCLANG\include\stdint.h \
-  D:\keil5\ARM\ARMCLANG\include\libcxx\stdio.h \
-  D:\keil5\ARM\ARMCLANG\include\stdio.h \
-  D:\keil5\ARM\ARMCLANG\include\libcxx\stdlib.h \
-  D:\keil5\ARM\ARMCLANG\include\stdlib.h \
-  D:\keil5\ARM\ARMCLANG\include\libcxx\string.h \
-  D:\keil5\ARM\ARMCLANG\include\string.h \
+  S:\6_rt_thread_project\0_Robomaster_project\1_DM_stm32h7\0_TEFCtrl_DMstm32H7_template\Drivers\CMSIS\Include\cmsis_version.h \
+  S:\6_rt_thread_project\0_Robomaster_project\1_DM_stm32h7\0_TEFCtrl_DMstm32H7_template\Drivers\CMSIS\Include\cmsis_compiler.h \
+  S:\6_rt_thread_project\0_Robomaster_project\1_DM_stm32h7\0_TEFCtrl_DMstm32H7_template\Drivers\CMSIS\Include\cmsis_armclang.h \
+  D:\keil5\ARM\ARMCLANG\include\arm_compat.h \
+  D:\keil5\ARM\ARMCLANG\include\arm_acle.h \
+  S:\6_rt_thread_project\0_Robomaster_project\1_DM_stm32h7\0_TEFCtrl_DMstm32H7_template\Drivers\CMSIS\Include\mpu_armv7.h \
+  ..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\system_stm32h7xx.h \
+  ..\Drivers\STM32H7xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h \
+  D:\keil5\ARM\ARMCLANG\include\libcxx\stddef.h \
+  D:\keil5\ARM\ARMCLANG\include\stddef.h \
   D:\keil5\ARM\ARMCLANG\include\libcxx\math.h \
   D:\keil5\ARM\ARMCLANG\include\math.h \
   D:\keil5\ARM\ARMCLANG\include\libcxx\__math\abs.h \
@@ -41,8 +52,6 @@ test/bsp_usart.o: ..\application\bsp\usart\bsp_usart.cpp \
   D:\keil5\ARM\ARMCLANG\include\libcxx\__type_traits\is_void.h \
   D:\keil5\ARM\ARMCLANG\include\libcxx\__type_traits\remove_reference.h \
   D:\keil5\ARM\ARMCLANG\include\libcxx\cstddef \
-  D:\keil5\ARM\ARMCLANG\include\libcxx\stddef.h \
-  D:\keil5\ARM\ARMCLANG\include\stddef.h \
   D:\keil5\ARM\ARMCLANG\include\libcxx\__type_traits\add_rvalue_reference.h \
   D:\keil5\ARM\ARMCLANG\include\libcxx\__type_traits\add_volatile.h \
   D:\keil5\ARM\ARMCLANG\include\libcxx\__type_traits\aligned_storage.h \
@@ -169,21 +178,8 @@ test/bsp_usart.o: ..\application\bsp\usart\bsp_usart.cpp \
   D:\keil5\ARM\ARMCLANG\include\libcxx\__math\rounding_functions.h \
   D:\keil5\ARM\ARMCLANG\include\libcxx\__math\traits.h \
   D:\keil5\ARM\ARMCLANG\include\libcxx\__math\trigonometric_functions.h \
-  ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal.h \
-  ..\Core\Inc\stm32h7xx_hal_conf.h \
-  ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_rcc.h \
-  ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_def.h \
-  ..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h7xx.h \
-  ..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h723xx.h \
-  ..\Drivers\CMSIS\Include\core_cm7.h \
-  S:\6_rt_thread_project\robomaster\1_DM_stm32h7_project\Test\Drivers\CMSIS\Include\cmsis_version.h \
-  S:\6_rt_thread_project\robomaster\1_DM_stm32h7_project\Test\Drivers\CMSIS\Include\cmsis_compiler.h \
-  S:\6_rt_thread_project\robomaster\1_DM_stm32h7_project\Test\Drivers\CMSIS\Include\cmsis_armclang.h \
-  D:\keil5\ARM\ARMCLANG\include\arm_compat.h \
-  D:\keil5\ARM\ARMCLANG\include\arm_acle.h \
-  S:\6_rt_thread_project\robomaster\1_DM_stm32h7_project\Test\Drivers\CMSIS\Include\mpu_armv7.h \
-  ..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\system_stm32h7xx.h \
-  ..\Drivers\STM32H7xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h \
+  D:\keil5\ARM\ARMCLANG\include\libcxx\stdlib.h \
+  D:\keil5\ARM\ARMCLANG\include\stdlib.h \
   ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_rcc_ex.h \
   ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_gpio.h \
   ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_gpio_ex.h \
@@ -213,14 +209,12 @@ test/bsp_usart.o: ..\application\bsp\usart\bsp_usart.cpp \
   ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_pcd.h \
   ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_ll_usb.h \
   ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_pcd_ex.h \
-  ..\Core\Inc\main.h ..\Core\Inc\stm32h7xx_it.h ..\Core\Inc\memorymap.h \
-  ..\Core\Inc\usart.h ..\Core\Inc\gpio.h \
-  D:\keil5\ARM\ARMCLANG\include\stdarg.h \
-  ..\application\bsp\can\bsp_fdcan.h ..\Core\Inc\fdcan.h \
-  ..\application\task\uart_task.h ..\application\task\motor_task.h \
-  ..\application\app\motor\dm_motor\dm_motor_ctrl.h \
-  ..\application\app\motor\dm_motor\dm_motor_drv.h \
-  ..\application\task\simple_os\scheduler.h \
-  D:\keil5\ARM\ARMCLANG\include\libcxx\cstring \
+  ..\Core\Inc\main.h ..\Core\Inc\usart.h \
   D:\keil5\ARM\ARMCLANG\include\libcxx\cstdarg \
-  D:\keil5\ARM\ARMCLANG\include\libcxx\cstdio
+  D:\keil5\ARM\ARMCLANG\include\stdarg.h \
+  D:\keil5\ARM\ARMCLANG\include\libcxx\cstring \
+  D:\keil5\ARM\ARMCLANG\include\libcxx\string.h \
+  D:\keil5\ARM\ARMCLANG\include\string.h \
+  D:\keil5\ARM\ARMCLANG\include\libcxx\cstdio \
+  D:\keil5\ARM\ARMCLANG\include\libcxx\stdio.h \
+  D:\keil5\ARM\ARMCLANG\include\stdio.h

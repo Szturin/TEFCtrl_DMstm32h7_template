@@ -1,10 +1,10 @@
 #include "daemon.h"
-#include "stdlib.h"
-#include "memory.h"
+#include <stdlib.h>
+#include <string.h>
 
-// ÓÃÓÚ±£´æËùÓÐµÄdaemon instance
+// ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½daemon instance
 static DaemonInstance *daemon_instances[DAEMON_MX_CNT] = {NULL};
-static uint8_t idx; // ÓÃÓÚ¼ÇÂ¼µ±Ç°µÄdaemon instanceÊýÁ¿,ÅäºÏ»Øµ÷Ê¹ÓÃ
+static uint8_t idx; // ï¿½ï¿½ï¿½Ú¼ï¿½Â¼ï¿½ï¿½Ç°ï¿½ï¿½daemon instanceï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Ï»Øµï¿½Ê¹ï¿½ï¿½
 
 DaemonInstance *DaemonRegister(Daemon_Init_Config_s *config)
 {
@@ -12,16 +12,16 @@ DaemonInstance *DaemonRegister(Daemon_Init_Config_s *config)
     memset(instance, 0, sizeof(DaemonInstance));
 
     instance->owner_id = config->owner_id;
-    instance->reload_count = config->reload_count == 0 ? 100 : config->reload_count; // Ä¬ÈÏÖµÎª100
+    instance->reload_count = config->reload_count == 0 ? 100 : config->reload_count; // Ä¬ï¿½ï¿½ÖµÎª100
     instance->callback = config->callback;
-    instance->temp_count = config->init_count == 0 ? 100 : config->init_count; // Ä¬ÈÏÖµÎª100,³õÊ¼¼ÆÊý
+    instance->temp_count = config->init_count == 0 ? 100 : config->init_count; // Ä¬ï¿½ï¿½ÖµÎª100,ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½
 
     instance->temp_count = config->reload_count;
     daemon_instances[idx++] = instance;
     return instance;
 }
 
-/* "Î¹¹·"º¯Êý */
+/* "Î¹ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½ */
 void DaemonReload(DaemonInstance *instance)
 {
     instance->temp_count = instance->reload_count;
@@ -32,20 +32,20 @@ uint8_t DaemonIsOnline(DaemonInstance *instance)
     return instance->temp_count > 0;
 }
 
-/*Èí¼þ¿´ÃÅ¹·£¬ºóÃæ¸Ä³ÉSTM32Ó²¼þ¿´ÃÅ¹·ÖÐ¶Ï*/
+/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½STM32Ó²ï¿½ï¿½ï¿½ï¿½ï¿½Å¹ï¿½ï¿½Ð¶ï¿½*/
 void DaemonTask()
 {
-    DaemonInstance *dins; // Ìá¸ß¿É¶ÁÐÔÍ¬Ê±½µµÍ·Ã´æ¿ªÏú
+    DaemonInstance *dins; // ï¿½ï¿½ß¿É¶ï¿½ï¿½ï¿½Í¬Ê±ï¿½ï¿½ï¿½Í·Ã´æ¿ªï¿½ï¿½
     for (size_t i = 0; i < idx; ++i)
     {
 
         dins = daemon_instances[i];
-        if (dins->temp_count > 0) // Èç¹û¼ÆÊýÆ÷»¹ÓÐÖµ,ËµÃ÷ÉÏÒ»´ÎÎ¹¹·ºó»¹Ã»ÓÐ³¬Ê±,Ôò¼ÆÊýÆ÷¼õÒ»
+        if (dins->temp_count > 0) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ,Ëµï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Î¹ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ð³ï¿½Ê±,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»
             dins->temp_count--;
-        else if (dins->callback) // µÈÓÚÁãËµÃ÷³¬Ê±ÁË,µ÷ÓÃ»Øµ÷º¯Êý(Èç¹ûÓÐµÄ»°)
+        else if (dins->callback) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½,ï¿½ï¿½ï¿½Ã»Øµï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ÐµÄ»ï¿½)
         {
-            dins->callback(dins->owner_id); // moduleÄÚ¿ÉÒÔ½«owner_idÇ¿ÖÆÀàÐÍ×ª»»³É×ÔÉíÀàÐÍ´Ó¶øµ÷ÓÃÌØ¶¨moduleµÄoffline callback
-            // @todo Îª·äÃùÆ÷/ledµÈÔö¼ÓÀëÏß±¨¾¯µÄ¹¦ÄÜ,·Ç³£¹Ø¼ü!
+            dins->callback(dins->owner_id); // moduleï¿½Ú¿ï¿½ï¿½Ô½ï¿½owner_idÇ¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í´Ó¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¶ï¿½moduleï¿½ï¿½offline callback
+            // @todo Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/ledï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß±ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½,ï¿½Ç³ï¿½ï¿½Ø¼ï¿½!
         }
     }
 }

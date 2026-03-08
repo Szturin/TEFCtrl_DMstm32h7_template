@@ -33,7 +33,7 @@ referee_info_t *UITaskInit(UART_HandleTypeDef *referee_usart_handle, Referee_Int
     referee_info = RefereeInit(); // 初始化裁判系统的串口,并返回裁判系统反馈数据指针
     Interactive_data = UI_data;                            // 获取UI绘制需要的机器人状态数据
     referee_info->init_flag = 1;
-    LOGINFO("TEF-UI INIT %d",referee_info->init_flag);
+    //LOGINFO("TEF-UI INIT %d",referee_info->init_flag);
     return referee_info;
 }
 
@@ -54,9 +54,8 @@ void UITask()
 
 void UI_event_callback()
 {
-    if(keyboard_value & 0x0040){ // 'Q'键
+    if(referee_info && (referee_info->RobotCommand.keyboard_value & 0x0040)){ // 'Q'键
         ui_event.refresh_flag = 1;
-        LOGINFO("refresh ui");
     }
 }
 
@@ -80,10 +79,9 @@ void MyUIInit()
     if(ui_event.refresh_flag != 0){// 不是触发刷新，则为第一次初始化
         if (!referee_info->init_flag)
             // 如果没有初始化裁判系统则直接删除ui任务
-            LOGERROR("NO REFREE INIT");
+            (void)0; // LOGERROR: 未初始化裁判系统
         while (referee_info->GameRobotState.robot_id == 0)
-
-            rt_thread_mdelay(100); // 若还未收到裁判系统数据,等待一段时间后再检查
+            HAL_Delay(100); // 若还未收到裁判系统数据,等待一段时间后再检查
 
         DeterminRobotID();                                            // 确定ui要发送到的目标客户端
 

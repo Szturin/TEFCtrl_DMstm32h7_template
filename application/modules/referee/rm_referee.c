@@ -3,10 +3,9 @@
 #include "crc_ref.h"
 //#include "bsp_usart.h"
 //#include "task.h"
-#include "daemon.h"
+#include "daemon/daemon.h"
 //#include "bsp_log.h"
 //#include "cmsis_os.h"
-#include "cmd_parse/uart_task.h"
 
 //static USARTInstance *referee_usart_instance; // 裁判系统串口实例
 
