@@ -43,6 +43,7 @@ og
 .settings/
 *.code-workspace
 .claude/
+CLAUDE.md
 
 # STM32CubeMX 备份文件
 *.ioc.bak
