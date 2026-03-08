@@ -45,7 +45,7 @@
 │   │   ├── usart/               # UART 驱动
 │   │   ├── delay/               # 延时（DWT）
 │   │   └── BMI088/              # IMU 驱动
-│   ├── app/                     # 应用模块
+│   ├── modules/                 # 功能模块（板级无关，可跨机器人复用）
 │   │   ├── general_def.h        # 全局常量（PI/RPM换算/电机参数）
 │   │   ├── motor/
 │   │   │   ├── dm_motor/        # 达妙电机驱动（MIT/位置/速度模式）
@@ -110,7 +110,7 @@ make -j8
 
 ## 新增模块工作流
 
-1. 在 `application/bsp/`、`application/app/`、`application/task/` 下添加文件
+1. 在 `application/bsp/`、`application/modules/`、`application/task/` 下添加文件
 2. 运行 `python sync_keil.py` 自动更新 Keil 工程（无需手动在 Keil GUI 添加）
 3. CMake 使用 `GLOB_RECURSE` 自动包含，无需修改 CMakeLists.txt
 
@@ -126,16 +126,16 @@ CubeMX 只修改 `Core/` 下的文件。每次重新生成后需检查：
 ### 达妙（DM）电机
 - 控制模式：MIT 力矩、位置、速度
 - 通信：FDCAN @ 1Mbps
-- 参考：`application/app/motor/dm_motor/`
+- 参考：`application/modules/motor/dm_motor/`
 
 ### 大疆（DJI）电机
 - 支持：M2006、M3508、GM6020
 - 分组发送：0x200（M2006/M3508 1-4）、0x1FF（M2006/M3508 5-8）、0x2FF（GM6020 5-7）
-- 参考：`application/app/motor/dji_motor/`
+- 参考：`application/modules/motor/dji_motor/`
 
 ### Snail C615 ESC
 - 控制：TIM2 CH1/CH3 PWM，1000~2000μs
-- 参考：`application/app/motor/dji_motor/snail_c615.*`
+- 参考：`application/modules/motor/dji_motor/snail_c615.*`
 
 ### BMI088 IMU
 - 接口：SPI
