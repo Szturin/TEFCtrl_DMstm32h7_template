@@ -91,6 +91,55 @@ def replace_group_files(content, group_name, new_files_xml):
     return new_content, count
 
 
+DSP_SRC_XML = """\
+        <Group>
+          <GroupName>lib</GroupName>
+          <Files>
+            <File>
+              <FileName>MatrixFunctions.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Middlewares/ST/ARM/DSP/Source/MatrixFunctions/MatrixFunctions.c</FilePath>
+            </File>
+            <File>
+              <FileName>FastMathFunctions.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Middlewares/ST/ARM/DSP/Source/FastMathFunctions/FastMathFunctions.c</FilePath>
+            </File>
+            <File>
+              <FileName>CommonTables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Middlewares/ST/ARM/DSP/Source/CommonTables/CommonTables.c</FilePath>
+            </File>
+          </Files>
+        </Group>"""
+
+
+def fix_linker(content):
+    """
+    CubeMX 重新生成 uvprojx 后可能清空 lib Group，此函数恢复。
+    AC6 (ARMCLANG) 无法链接 AC5 编译的预编译 .lib，改为直接编译
+    DSP 矩阵函数源码（MatrixFunctions.c）。
+    """
+    # 清空 IncludeLibs / IncludeLibsPath（已不需要预编译 .lib）
+    def clear_tag(tag, text):
+        return re.sub(rf'<{tag}>[^<]*</{tag}>', f'<{tag}></{tag}>', text)
+
+    content = clear_tag("IncludeLibs",     content)
+    content = clear_tag("IncludeLibsPath", content)
+
+    # 确保 lib Group 存在（以 GroupName>lib< 判断）
+    if "<GroupName>lib</GroupName>" not in content:
+        content = content.replace(
+            "      </Groups>",
+            DSP_SRC_XML + "\n      </Groups>"
+        )
+        print("[修复] lib Group 已添加（DSP MatrixFunctions.c 源码编译）")
+    else:
+        print("[确认] lib Group 已存在，无需修复")
+
+    return content
+
+
 def main():
     if not os.path.exists(UVPROJX):
         print(f"[错误] 找不到 uvprojx 文件：{UVPROJX}")
@@ -115,6 +164,8 @@ def main():
             total_added += len(files)
         else:
             print(f"[警告] Group '{group_name}' 在 uvprojx 中未找到，跳过")
+
+    content = fix_linker(content)
 
     with open(UVPROJX, "w", encoding="utf-8") as f:
         f.write(content)

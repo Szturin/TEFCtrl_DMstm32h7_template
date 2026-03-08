@@ -372,8 +372,8 @@
             <DataAddressRange></DataAddressRange>
             <pXoBase></pXoBase>
             <ScatterFile></ScatterFile>
-            <IncludeLibs>../Middlewares/ST/ARM/DSP/Lib/ARM/arm_cortexM7lfdp_math.lib</IncludeLibs>
-            <IncludeLibsPath>../Middlewares/ST/ARM/DSP/Lib/ARM</IncludeLibsPath>
+            <IncludeLibs></IncludeLibs>
+            <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
@@ -1033,6 +1033,26 @@
               <FileName>scheduler.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\application\task\simple_os\scheduler.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lib</GroupName>
+          <Files>
+            <File>
+              <FileName>MatrixFunctions.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Middlewares/ST/ARM/DSP/Source/MatrixFunctions/MatrixFunctions.c</FilePath>
+            </File>
+            <File>
+              <FileName>FastMathFunctions.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Middlewares/ST/ARM/DSP/Source/FastMathFunctions/FastMathFunctions.c</FilePath>
+            </File>
+            <File>
+              <FileName>CommonTables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Middlewares/ST/ARM/DSP/Source/CommonTables/CommonTables.c</FilePath>
             </File>
           </Files>
         </Group>
