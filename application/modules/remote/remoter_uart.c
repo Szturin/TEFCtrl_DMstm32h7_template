@@ -1,7 +1,7 @@
-#include "bsp_system.h"
+#include "app_link.h"
 #include "remoter_uart.h"
 
-/*È«¾Ö±äÁ¿ warning £¡£¡£¡*/
+/*å…¨å±€å˜é‡ warning ï¼ï¼ï¼*/
 wbus_rc_info_t wbus_rc;
 
 void remote_filter(int16_t *data, int16_t new_data, float filter_a){
@@ -14,10 +14,10 @@ void parse_wbus_data(wbus_rc_info_t *rc_wbus, uint8_t *buff)
 
     if (buff[0] != 0x0F)
     {
-        return; // ¼ì²éÆğÊ¼Î»
+        return; // æ£€æŸ¥èµ·å§‹ä½
     }
 
-    /*Ò£¸ĞÍ¨µÀ»º´æ*/
+    /*é¥æ„Ÿé€šé“ç¼“å­˜*/
     remote_buffer[0] = ((buff[1] | (buff[2] << 8)) & 0x07FF);
     remote_buffer[0] -= 1024;
     remote_buffer[1] = ((buff[2] >> 3) | (buff[3] << 5)) & 0x07FF ;
@@ -27,42 +27,42 @@ void parse_wbus_data(wbus_rc_info_t *rc_wbus, uint8_t *buff)
     remote_buffer[3] = ((buff[5] >> 1) | (buff[6] << 7)) & 0x07FF;
     remote_buffer[3] -= 1024;
 
-    /*×óÓÒÒ£¸Ë£¬½øĞĞÒ»½×µÍÍ¨ÂË²¨*/
+    /*å·¦å³é¥æ†ï¼Œè¿›è¡Œä¸€é˜¶ä½é€šæ»¤æ³¢*/
     remote_filter(&rc_wbus->remote.ch1,remote_buffer[0],0.38f);
     remote_filter(&rc_wbus->remote.ch2,remote_buffer[1],0.38f);
     remote_filter(&rc_wbus->remote.ch3,remote_buffer[2],0.38f);
     remote_filter(&rc_wbus->remote.ch4,remote_buffer[3],0.38f);
 
-    /*²¦Æ¬Í¨µÀ*/
-    rc_wbus->remote.SA = (((buff[6] >> 4) | (buff[7] << 4)) & 0x07FF) / 671 - 1;				            // ²¦Æ¬Í¨µÀ1
-    rc_wbus->remote.SB = (((buff[7] >> 7) | (buff[8] << 1) | (buff[9] << 9)) & 0x07FF) / 671 - 1;         // ²¦Æ¬Í¨µÀ2
-    rc_wbus->remote.SC = ((buff[9] >> 2) | (buff[10]<<6)) & 0x07FF / 671 - 1;                           // ²¦Æ¬Í¨µÀ3
-    rc_wbus->remote.SD =  (((buff[10] >> 5) | (buff[11] << 3)) & 0x07FF) / 671 - 1;                       // ²¦Æ¬Í¨µÀ4
-    rc_wbus->remote.SE = ((buff[12] | (buff[13] << 8)) & 0x07FF) / 671 - 1;                             // ²¦Æ¬Í¨µÀ5
-    rc_wbus->remote.SF = ((buff[13] >> 3) | (buff[14] << 5)) & 0x07FF / 671 - 1;                        // ²¦Æ¬Í¨µÀ6
-    rc_wbus->remote.SG =  ((buff[14] >> 6) | (buff[15] << 2) | (buff[16] << 10)) & 0x07FF / 671 - 1;    // ²¦Æ¬Í¨µÀ7
-    rc_wbus->remote.SH =  ((buff[16] >> 1) | (buff[17] << 7)) & 0x07FF / 671 - 1;                       // ²¦Æ¬Í¨µÀ8
+    /*æ‹¨ç‰‡é€šé“*/
+    rc_wbus->remote.SA = (((buff[6] >> 4) | (buff[7] << 4)) & 0x07FF) / 671 - 1;				            // æ‹¨ç‰‡é€šé“1
+    rc_wbus->remote.SB = (((buff[7] >> 7) | (buff[8] << 1) | (buff[9] << 9)) & 0x07FF) / 671 - 1;         // æ‹¨ç‰‡é€šé“2
+    rc_wbus->remote.SC = ((buff[9] >> 2) | (buff[10]<<6)) & 0x07FF / 671 - 1;                           // æ‹¨ç‰‡é€šé“3
+    rc_wbus->remote.SD =  (((buff[10] >> 5) | (buff[11] << 3)) & 0x07FF) / 671 - 1;                       // æ‹¨ç‰‡é€šé“4
+    rc_wbus->remote.SE = ((buff[12] | (buff[13] << 8)) & 0x07FF) / 671 - 1;                             // æ‹¨ç‰‡é€šé“5
+    rc_wbus->remote.SF = ((buff[13] >> 3) | (buff[14] << 5)) & 0x07FF / 671 - 1;                        // æ‹¨ç‰‡é€šé“6
+    rc_wbus->remote.SG =  ((buff[14] >> 6) | (buff[15] << 2) | (buff[16] << 10)) & 0x07FF / 671 - 1;    // æ‹¨ç‰‡é€šé“7
+    rc_wbus->remote.SH =  ((buff[16] >> 1) | (buff[17] << 7)) & 0x07FF / 671 - 1;                       // æ‹¨ç‰‡é€šé“8
 
-    /*ĞıÅ¥Í¨µÀ*/
-    rc_wbus->remote.LD = ((buff[17] >> 4) | (buff[18] << 4)) & 0x07FF ;				         // ĞıÅ¥1
+    /*æ—‹é’®é€šé“*/
+    rc_wbus->remote.LD = ((buff[17] >> 4) | (buff[18] << 4)) & 0x07FF ;				         // æ—‹é’®1
     rc_wbus->remote.LD -= 1024;
-    rc_wbus->remote.RD= ((buff[18] >> 7) | (buff[19] << 1) | (buff[20] << 9)) & 0x07FF;      // ĞıÅ¥2
+    rc_wbus->remote.RD= ((buff[18] >> 7) | (buff[19] << 1) | (buff[20] << 9)) & 0x07FF;      // æ—‹é’®2
     rc_wbus->remote.RD -= 1024;
 
-    /*²¦ÂÖÍ¨µÀ*/
-    rc_wbus->remote.LS = ((buff[20] >> 2) | (buff[21]<<6)) & 0x07FF;                         // ²¦ÂÖÍ¨µÀ1
+    /*æ‹¨è½®é€šé“*/
+    rc_wbus->remote.LS = ((buff[20] >> 2) | (buff[21]<<6)) & 0x07FF;                         // æ‹¨è½®é€šé“1
     rc_wbus->remote.LS -= 1024;
-    rc_wbus->remote.RS= ((buff[21] >> 5) | (buff[22] << 3)) & 0x07FF;                        // ²¦ÂÖÍ¨µÀ2
+    rc_wbus->remote.RS= ((buff[21] >> 5) | (buff[22] << 3)) & 0x07FF;                        // æ‹¨è½®é€šé“2
     rc_wbus->remote.RS -= 1024;
 }
 
 
-// UART ³õÊ¼»¯ (DMA + ¿ÕÏĞÖĞ¶Ï)
+// UART åˆå§‹åŒ– (DMA + ç©ºé—²ä¸­æ–­)
 void RemoteInit(void)
 {
-    // ÅäÖÃ HAL µÄ DMA + ¿ÕÏĞÖĞ¶ÏÄ£Ê½
+    // é…ç½® HAL çš„ DMA + ç©ºé—²ä¸­æ–­æ¨¡å¼
     HAL_UARTEx_ReceiveToIdle_DMA(&huart5, uart5_rx_dma_buffer, sizeof(uart5_rx_dma_buffer));
-    // ½ûÓÃ DMA °ë´«ÊäÖĞ¶Ï (Half Transfer IT)£¬¼õÉÙ²»±ØÒªµÄÖĞ¶Ï
+    // ç¦ç”¨ DMA åŠä¼ è¾“ä¸­æ–­ (Half Transfer IT)ï¼Œå‡å°‘ä¸å¿…è¦çš„ä¸­æ–­
     __HAL_DMA_DISABLE_IT(&hdma_uart5_rx, DMA_IT_HT);
 
 }

@@ -6,7 +6,7 @@
 extern "C" {
 #endif
 
-#include "bsp_system.h"
+#include "app_link.h"
 
 // ����PID���ƽṹ��
 typedef struct {

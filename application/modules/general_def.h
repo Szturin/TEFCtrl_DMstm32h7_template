@@ -2,7 +2,7 @@
 #define GENERAL_DEF_H
 
 // һЩmodule��ͨ����ֵ�Ͷ���,ע������macro����,һЩ�������math.h���Ѿ��������
-#include "bsp_system.h"
+#include "app_link.h"
 
 #ifndef PI
 #define PI 3.1415926535f

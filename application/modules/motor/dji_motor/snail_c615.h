@@ -4,7 +4,7 @@
 
 #ifndef SNAIL_C615_H
 #define SNAIL_C615_H
-#include "bsp_system.h"
+#include "app_link.h"
 
 #ifdef __cplusplus
 extern "C" { // 存放C接口

@@ -6,7 +6,7 @@
 extern "C" {
 #endif
 #define RINGBUFFER_SIZE (512)
-#include "bsp_system.h"
+#include "app_link.h"
 typedef struct
 {
     uint32_t w;

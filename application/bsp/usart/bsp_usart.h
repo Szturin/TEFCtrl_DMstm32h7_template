@@ -5,14 +5,9 @@
 #ifndef BSP_USART_H
 #define BSP_USART_H
 
-#include "bsp_system.h"
-#include "usart.h"
 #include "stm32h7xx_hal.h"
-#include "stm32h7xx.h"
 #include "main.h"
-#include "memorymap.h"
 #include "usart.h"
-#include "gpio.h"
 
 #ifdef __cplusplus
 #include <cstdarg>

@@ -1,29 +1,29 @@
 #ifndef REMOTER_UART_H
 #define REMOTER_UART_H
 
-#include "bsp_system.h"
+#include "app_link.h"
 #define WBUS_BUFLEN    (25)
 
 typedef struct {
     struct {
-        int16_t ch1;   // 遥控通道1
-        int16_t ch2;   // 遥控通道2
-        int16_t ch3;   // 遥控通道3
-        int16_t ch4;   // 遥控通道4
+        int16_t ch1;   // 閬ユ帶閫氶亾1
+        int16_t ch2;   // 閬ユ帶閫氶亾2
+        int16_t ch3;   // 閬ユ帶閫氶亾3
+        int16_t ch4;   // 閬ユ帶閫氶亾4
 
-        int16_t SA;    // 拨片通道1
-        int16_t SB;    // 拨片通道2
-        int16_t SC;    // 拨片通道3
-        int16_t SD;    // 拨片通道4
-        int16_t SE;    // 拨片通道5
-        int16_t SF;    // 拨片通道6
-        int16_t SG;    // 拨片通道7
-        int16_t SH;    // 拨片通道8
+        int16_t SA;    // 鎷ㄧ墖閫氶亾1
+        int16_t SB;    // 鎷ㄧ墖閫氶亾2
+        int16_t SC;    // 鎷ㄧ墖閫氶亾3
+        int16_t SD;    // 鎷ㄧ墖閫氶亾4
+        int16_t SE;    // 鎷ㄧ墖閫氶亾5
+        int16_t SF;    // 鎷ㄧ墖閫氶亾6
+        int16_t SG;    // 鎷ㄧ墖閫氶亾7
+        int16_t SH;    // 鎷ㄧ墖閫氶亾8
 
-        int16_t LD;    // 旋钮通道1
-        int16_t RD;    // 旋钮通道2
-        int16_t LS;    // 拨轮通道1
-        int16_t RS;    // 拨轮通道2
+        int16_t LD;    // 鏃嬮挳閫氶亾1
+        int16_t RD;    // 鏃嬮挳閫氶亾2
+        int16_t LS;    // 鎷ㄨ疆閫氶亾1
+        int16_t RS;    // 鎷ㄨ疆閫氶亾2
 
     } remote;
 } wbus_rc_info_t;

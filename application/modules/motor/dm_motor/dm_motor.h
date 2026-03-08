@@ -5,7 +5,7 @@
 #ifndef DM_MOTOR_H
 #define DM_MOTOR_H
 
-#include "bsp_system.h"
+#include "app_link.h"
 #include "main.h"
 #include "memorymap.h"
 #include <cstdarg>
