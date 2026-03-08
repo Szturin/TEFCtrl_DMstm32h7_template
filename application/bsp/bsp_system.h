@@ -34,7 +34,7 @@ extern "C" {
 
 #include "motor_task.h"
 #include "typedef.h"
-#include "app/remote/remoter_uart.h"
+#include "module/remote/remoter_uart.h"
 #include "ringbuffer/ringbuffer.h"
 #include "ringbuffer/ringbuffer_test.h"
 
