@@ -3,7 +3,7 @@
 # ==============================================================================
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_VERSION 1)
-cmake_minimum_required(VERSION 3.31)
+cmake_minimum_required(VERSION 3.22)
 
 # specify cross-compilers and tools
 set(CMAKE_C_COMPILER arm-none-eabi-gcc)
@@ -117,8 +117,8 @@ list(APPEND SOURCES ${USB_MIDDLEWARE_SOURCES})
 file(GLOB_RECURSE RT_THREAD_SOURCES "Middlewares/Third_Party/RealThread_RTOS_RT-Thread/*.c")
 list(APPEND SOURCES ${RT_THREAD_SOURCES})
 
-# 剔除 main.c (因为通常使用 main.cpp)
-list(REMOVE_ITEM SOURCES "${CMAKE_SOURCE_DIR}/Core/Src/main.c")
+# 剔除旧的 main.cpp（现已拆分为 main.c + app_main.cpp）
+list(REMOVE_ITEM SOURCES "${CMAKE_SOURCE_DIR}/Core/Src/main.cpp")
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32H723VGTX_FLASH.ld)
 
 add_link_options(-Wl,-gc-sections,--print-memory-usage,-Map=${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map)

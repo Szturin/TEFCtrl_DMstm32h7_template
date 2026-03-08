@@ -49,6 +49,17 @@ Desktop.ini
 *.tmp
 *~
 
+# 压缩包（不应进版本库）
+*.rar
+*.zip
+*.7z
+
+# 临时脚本和文档
+*.ps1
+新建文本文档.txt
+*检查报告.md
+tmpclaude*
+
 # 调试文件
 *.dblite
 

@@ -245,6 +245,116 @@ void HAL_FDCAN_ErrorStatusCallback(FDCAN_HandleTypeDef *hfdcan, uint32_t ErrorSt
 	}
 }
 
+/* ============================================================
+ * FDCANInstance 面向对象接口（供 dji_motor 等模块使用）
+ * ============================================================ */
+#include "stdlib.h"
+#include "string.h"
+
+static FDCANInstance *fdcan_instance[FDCAN_MX_REGISTER_CNT] = {NULL};
+static uint8_t fdcan_idx = 0;
+
+static uint32_t ByteToDLC(uint8_t len) {
+    if (len <= 8)  return len << 16;
+    if (len <= 12) return FDCAN_DLC_BYTES_12;
+    if (len <= 16) return FDCAN_DLC_BYTES_16;
+    if (len <= 20) return FDCAN_DLC_BYTES_20;
+    if (len <= 24) return FDCAN_DLC_BYTES_24;
+    if (len <= 32) return FDCAN_DLC_BYTES_32;
+    if (len <= 48) return FDCAN_DLC_BYTES_48;
+    return FDCAN_DLC_BYTES_64;
+}
+
+static uint8_t DLCToByte(uint32_t dlc) {
+    if (dlc <= FDCAN_DLC_BYTES_8) return dlc >> 16;
+    switch (dlc) {
+    case FDCAN_DLC_BYTES_12: return 12;
+    case FDCAN_DLC_BYTES_16: return 16;
+    case FDCAN_DLC_BYTES_20: return 20;
+    case FDCAN_DLC_BYTES_24: return 24;
+    case FDCAN_DLC_BYTES_32: return 32;
+    case FDCAN_DLC_BYTES_48: return 48;
+    case FDCAN_DLC_BYTES_64: return 64;
+    default: return 8;
+    }
+}
+
+FDCANInstance *FDCANRegister(FDCAN_Init_Config_s *config) {
+    if (fdcan_idx >= FDCAN_MX_REGISTER_CNT) return NULL;
+
+    if (config->fdcan_handle->State == HAL_FDCAN_STATE_READY) {
+        HAL_FDCAN_ConfigGlobalFilter(config->fdcan_handle, FDCAN_REJECT, FDCAN_REJECT,
+                                     FDCAN_REJECT_REMOTE, FDCAN_REJECT_REMOTE);
+        HAL_FDCAN_ConfigFifoWatermark(config->fdcan_handle, FDCAN_CFG_RX_FIFO0, 1);
+        HAL_FDCAN_Start(config->fdcan_handle);
+        HAL_FDCAN_ActivateNotification(config->fdcan_handle,
+            FDCAN_IT_RX_FIFO0_WATERMARK | FDCAN_IT_TX_COMPLETE | FDCAN_IT_TX_FIFO_EMPTY |
+            FDCAN_IT_BUS_OFF | FDCAN_IT_ARB_PROTOCOL_ERROR | FDCAN_IT_DATA_PROTOCOL_ERROR |
+            FDCAN_IT_ERROR_PASSIVE | FDCAN_IT_ERROR_WARNING, 0x00000F00);
+    }
+
+    FDCANInstance *instance = (FDCANInstance *)malloc(sizeof(FDCANInstance));
+    memset(instance, 0, sizeof(FDCANInstance));
+
+    instance->fdcan_handle = config->fdcan_handle;
+    instance->tx_id        = config->tx_id;
+    instance->rx_id        = config->rx_id;
+    instance->fdcan_module_callback = config->fdcan_module_callback;
+    instance->id           = config->id;
+
+    instance->txconf.Identifier         = config->tx_id;
+    instance->txconf.IdType             = FDCAN_STANDARD_ID;
+    instance->txconf.TxFrameType        = FDCAN_DATA_FRAME;
+    instance->txconf.DataLength         = ByteToDLC(config->data_len);
+    instance->txconf.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+    instance->txconf.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+    instance->txconf.MessageMarker      = 0;
+
+    if (config->fdcan_handle->Init.FrameFormat == FDCAN_FRAME_CLASSIC) {
+        instance->txconf.BitRateSwitch = FDCAN_BRS_OFF;
+        instance->txconf.FDFormat      = FDCAN_CLASSIC_CAN;
+    } else {
+        instance->txconf.BitRateSwitch = FDCAN_BRS_ON;
+        instance->txconf.FDFormat      = FDCAN_FD_CAN;
+    }
+
+    // 配置过滤器（接受所有，由回调按 rx_id 软过滤）
+    FDCAN_FilterTypeDef f = {
+        .IdType = FDCAN_STANDARD_ID, .FilterIndex = 0,
+        .FilterType = FDCAN_FILTER_MASK, .FilterConfig = FDCAN_FILTER_TO_RXFIFO0,
+        .FilterID1 = 0, .FilterID2 = 0
+    };
+    HAL_FDCAN_ConfigFilter(instance->fdcan_handle, &f);
+
+    fdcan_instance[fdcan_idx++] = instance;
+    return instance;
+}
+
+uint8_t FDCANTransmit(FDCANInstance *_instance, uint16_t len) {
+    _instance->txconf.DataLength = ByteToDLC((uint8_t)len);
+    return (HAL_FDCAN_AddMessageToTxFifoQ(_instance->fdcan_handle,
+                                          &_instance->txconf,
+                                          _instance->tx_buff) == HAL_OK) ? 1 : 0;
+}
+
+/* 中断回调：分发到已注册实例 */
+void HAL_FDCAN_RxFifo0WaterlevelCallback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs) {
+    FDCAN_RxHeaderTypeDef rx_header;
+    uint8_t rx_data[64];
+    while (HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_data) == HAL_OK) {
+        for (uint8_t i = 0; i < fdcan_idx; i++) {
+            if (hfdcan == fdcan_instance[i]->fdcan_handle &&
+                rx_header.Identifier == fdcan_instance[i]->rx_id) {
+                fdcan_instance[i]->rx_len = DLCToByte(rx_header.DataLength);
+                memcpy(fdcan_instance[i]->rx_buff, rx_data, fdcan_instance[i]->rx_len);
+                if (fdcan_instance[i]->fdcan_module_callback)
+                    fdcan_instance[i]->fdcan_module_callback(fdcan_instance[i]);
+                break;
+            }
+        }
+    }
+}
+
 
 
 

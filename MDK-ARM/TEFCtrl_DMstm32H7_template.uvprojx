@@ -396,8 +396,13 @@
           <Files>
             <File>
               <FileName>main.c</FileName>
-              <FileType>8</FileType>
+              <FileType>1</FileType>
               <FilePath>../Core/Src/main.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_main.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\application\app_main.cpp</FilePath>
             </File>
             <File>
               <FileName>gpio.c</FileName>
@@ -678,7 +683,52 @@
         </Group>
         <Group>
           <GroupName>user/bsp</GroupName>
-          <Files>
+                                        <Files>
+            <File>
+              <FileName>bsp_system.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\bsp\bsp_system.h</FilePath>
+            </File>
+            <File>
+              <FileName>typedef.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\bsp\typedef.h</FilePath>
+            </File>
+            <File>
+              <FileName>BMI088Middleware.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\bsp\BMI088\BMI088Middleware.c</FilePath>
+            </File>
+            <File>
+              <FileName>BMI088Middleware.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\bsp\BMI088\BMI088Middleware.h</FilePath>
+            </File>
+            <File>
+              <FileName>BMI088driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\bsp\BMI088\BMI088driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>BMI088driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\bsp\BMI088\BMI088driver.h</FilePath>
+            </File>
+            <File>
+              <FileName>BMI088reg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\bsp\BMI088\BMI088reg.h</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_dwt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\bsp\BMI088\bsp_dwt.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_dwt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\bsp\BMI088\bsp_dwt.h</FilePath>
+            </File>
             <File>
               <FileName>bsp_fdcan.c</FileName>
               <FileType>1</FileType>
@@ -690,19 +740,14 @@
               <FilePath>..\application\bsp\can\bsp_fdcan.h</FilePath>
             </File>
             <File>
-              <FileName>delay.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\application\bsp\delay\delay.h</FilePath>
-            </File>
-            <File>
               <FileName>delay.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\application\bsp\delay\delay.c</FilePath>
             </File>
             <File>
-              <FileName>bsp_usart.h</FileName>
+              <FileName>delay.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\bsp\usart\bsp_usart.h</FilePath>
+              <FilePath>..\application\bsp\delay\delay.h</FilePath>
             </File>
             <File>
               <FileName>bsp_usart.cpp</FileName>
@@ -710,15 +755,30 @@
               <FilePath>..\application\bsp\usart\bsp_usart.cpp</FilePath>
             </File>
             <File>
-              <FileName>bsp_system.h</FileName>
+              <FileName>bsp_usart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\bsp\bsp_system.h</FilePath>
+              <FilePath>..\application\bsp\usart\bsp_usart.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>user/app</GroupName>
-          <Files>
+                                        <Files>
+            <File>
+              <FileName>general_def.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\app\general_def.h</FilePath>
+            </File>
+            <File>
+              <FileName>MahonyAHRS.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\app\algorithm\Mahony\MahonyAHRS.c</FilePath>
+            </File>
+            <File>
+              <FileName>MahonyAHRS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\app\algorithm\Mahony\MahonyAHRS.h</FilePath>
+            </File>
             <File>
               <FileName>math.c</FileName>
               <FileType>1</FileType>
@@ -730,14 +790,14 @@
               <FilePath>..\application\app\algorithm\math\math.h</FilePath>
             </File>
             <File>
-              <FileName>pid.c</FileName>
+              <FileName>pid_plus.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\application\app\algorithm\PID\pid.c</FilePath>
+              <FilePath>..\application\app\algorithm\PID\pid_plus.c</FilePath>
             </File>
             <File>
-              <FileName>pid.h</FileName>
+              <FileName>pid_plus.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\application\app\algorithm\PID\pid.h</FilePath>
+              <FilePath>..\application\app\algorithm\PID\pid_plus.h</FilePath>
             </File>
             <File>
               <FileName>pid_test_app.c</FileName>
@@ -748,6 +808,101 @@
               <FileName>pid_test_app.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\application\app\algorithm\PID\pid_test_app.h</FilePath>
+            </File>
+            <File>
+              <FileName>QuaternionEKF.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\app\algorithm\_imu\QuaternionEKF.c</FilePath>
+            </File>
+            <File>
+              <FileName>QuaternionEKF.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\app\algorithm\_imu\QuaternionEKF.h</FilePath>
+            </File>
+            <File>
+              <FileName>algorithm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\app\algorithm\_imu\algorithm.c</FilePath>
+            </File>
+            <File>
+              <FileName>algorithm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\app\algorithm\_imu\algorithm.h</FilePath>
+            </File>
+            <File>
+              <FileName>controller.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\app\algorithm\_imu\controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\app\algorithm\_imu\controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>kalman_filter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\app\algorithm\_imu\kalman_filter.c</FilePath>
+            </File>
+            <File>
+              <FileName>kalman_filter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\app\algorithm\_imu\kalman_filter.h</FilePath>
+            </File>
+            <File>
+              <FileName>pid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\app\algorithm\_imu\pid.c</FilePath>
+            </File>
+            <File>
+              <FileName>pid.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\app\algorithm\_imu\pid.h</FilePath>
+            </File>
+            <File>
+              <FileName>user_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\app\algorithm\_imu\user_lib.c</FilePath>
+            </File>
+            <File>
+              <FileName>user_lib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\app\algorithm\_imu\user_lib.h</FilePath>
+            </File>
+            <File>
+              <FileName>dji_motor.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\application\app\motor\dji_motor\dji_motor.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dji_motor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\app\motor\dji_motor\dji_motor.h</FilePath>
+            </File>
+            <File>
+              <FileName>motor_def.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\app\motor\dji_motor\motor_def.h</FilePath>
+            </File>
+            <File>
+              <FileName>snail_c615.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\application\app\motor\dji_motor\snail_c615.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>snail_c615.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\app\motor\dji_motor\snail_c615.h</FilePath>
+            </File>
+            <File>
+              <FileName>dm_motor.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\application\app\motor\dm_motor\dm_motor.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dm_motor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\app\motor\dm_motor\dm_motor.h</FilePath>
             </File>
             <File>
               <FileName>dm_motor_ctrl.c</FileName>
@@ -770,6 +925,16 @@
               <FilePath>..\application\app\motor\dm_motor\dm_motor_drv.h</FilePath>
             </File>
             <File>
+              <FileName>remoter_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\app\remote\remoter_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>remoter_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\app\remote\remoter_uart.h</FilePath>
+            </File>
+            <File>
               <FileName>ringbuffer.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\application\app\ringbuffer\ringbuffer.c</FilePath>
@@ -779,11 +944,31 @@
               <FileType>5</FileType>
               <FilePath>..\application\app\ringbuffer\ringbuffer.h</FilePath>
             </File>
+            <File>
+              <FileName>ringbuffer_test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\app\ringbuffer\ringbuffer_test.c</FilePath>
+            </File>
+            <File>
+              <FileName>ringbuffer_test.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\app\ringbuffer\ringbuffer_test.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>user/task</GroupName>
-          <Files>
+                                        <Files>
+            <File>
+              <FileName>imu_temp_ctrl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\task\imu_temp_ctrl.c</FilePath>
+            </File>
+            <File>
+              <FileName>imu_temp_ctrl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\task\imu_temp_ctrl.h</FilePath>
+            </File>
             <File>
               <FileName>motor_task.cpp</FileName>
               <FileType>8</FileType>
