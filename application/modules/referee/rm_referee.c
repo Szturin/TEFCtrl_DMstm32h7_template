@@ -140,16 +140,16 @@ referee_info_t *RefereeInit()
 	return &referee_info;
 }
 
-void RefereeUART_Init(){
-    /*图传串口*/
-    HAL_UARTEx_ReceiveToIdle_DMA(&huart6, uart6_rx_dma_buffer, sizeof(uart6_rx_dma_buffer));
-    // 禁用 DMA 半传输中断 (Half Transfer IT)，减少不必要的中断
-    __HAL_DMA_DISABLE_IT(&hdma_usart6_rx, DMA_IT_HT);
+static uint8_t uart3_rx_dma_buffer[RE_RX_BUFFER_SIZE]; // 裁判系统 DMA 缓冲
+// 注: H7 板无 USART6/DMA，图传串口需用户在 CubeMX 中配置后补充
 
-    /*裁判系统串口*/
+void RefereeUART_Init(){
+    /* @todo 图传串口: H7板无huart6，需在CubeMX中配置对应UART并修改此处 */
+
+    /*裁判系统串口 (huart3) — 需在 CubeMX 中为 USART3 开启 DMA RX */
     HAL_UARTEx_ReceiveToIdle_DMA(&huart3, uart3_rx_dma_buffer, sizeof(uart3_rx_dma_buffer));
-    // 禁用 DMA 半传输中断 (Half Transfer IT)，减少不必要的中断
-    __HAL_DMA_DISABLE_IT(&hdma_usart3_rx, DMA_IT_HT);
+    /* @todo 配置 USART3 DMA 后取消下行注释 */
+    // __HAL_DMA_DISABLE_IT(&hdma_usart3_rx, DMA_IT_HT);
 }
 
 /**
@@ -158,6 +158,6 @@ void RefereeUART_Init(){
  */
 void RefereeSend(uint8_t *send, uint16_t tx_len)
 {
-	USARTSend(&huart3, send, tx_len, USART_TRANSFER_BLOCKING);
-    rt_thread_mdelay(50);
+    HAL_UART_Transmit(&huart3, send, tx_len, HAL_MAX_DELAY);
+    HAL_Delay(50);
 }

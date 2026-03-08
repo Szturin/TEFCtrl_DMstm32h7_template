@@ -6,6 +6,7 @@ extern "C" {
 #endif
 #include "bsp/usart/bsp_usart.h"
 #include "remote/remoter_uart.h"
+#include "modules/ringbuffer/ringbuffer_test.h"
 
 #define  BUFFER_SIZE (256)
 #define  BUFFER_SIZE_SMALL (64)

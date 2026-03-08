@@ -683,7 +683,7 @@
         </Group>
         <Group>
           <GroupName>user/bsp</GroupName>
-          <Files>
+                    <Files>
             <File>
               <FileName>typedef.h</FileName>
               <FileType>5</FileType>
@@ -758,7 +758,7 @@
         </Group>
         <Group>
           <GroupName>user/modules</GroupName>
-          <Files>
+                    <Files>
             <File>
               <FileName>general_def.h</FileName>
               <FileType>5</FileType>
@@ -1008,7 +1008,7 @@
         </Group>
         <Group>
           <GroupName>user/task</GroupName>
-          <Files>
+                    <Files>
             <File>
               <FileName>imu_temp_ctrl.c</FileName>
               <FileType>1</FileType>

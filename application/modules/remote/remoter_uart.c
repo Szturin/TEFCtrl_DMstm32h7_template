@@ -58,6 +58,7 @@ void parse_wbus_data(wbus_rc_info_t *rc_wbus, uint8_t *buff)
 
 
 // UART 初始化 (DMA + 空闲中断)
+extern uint8_t uart5_rx_dma_buffer[WBUS_BUFLEN]; // 定义在 uart_task.cpp
 void RemoteInit(void)
 {
     // 配置 HAL 的 DMA + 空闲中断模式
