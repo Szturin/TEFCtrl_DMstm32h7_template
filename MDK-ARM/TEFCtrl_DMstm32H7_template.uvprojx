@@ -372,8 +372,8 @@
             <DataAddressRange></DataAddressRange>
             <pXoBase></pXoBase>
             <ScatterFile></ScatterFile>
-            <IncludeLibs></IncludeLibs>
-            <IncludeLibsPath></IncludeLibsPath>
+            <IncludeLibs>../Middlewares/ST/ARM/DSP/Lib/ARM/arm_cortexM7lfdp_math.lib</IncludeLibs>
+            <IncludeLibsPath>../Middlewares/ST/ARM/DSP/Lib/ARM</IncludeLibsPath>
             <Misc></Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
@@ -458,11 +458,6 @@
               <FileName>stm32h7xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32h7xx_hal_msp.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7xx_hal_timebase_tim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/stm32h7xx_hal_timebase_tim.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -683,7 +678,7 @@
         </Group>
         <Group>
           <GroupName>user/bsp</GroupName>
-                    <Files>
+          <Files>
             <File>
               <FileName>typedef.h</FileName>
               <FileType>5</FileType>
@@ -758,7 +753,7 @@
         </Group>
         <Group>
           <GroupName>user/modules</GroupName>
-                    <Files>
+          <Files>
             <File>
               <FileName>general_def.h</FileName>
               <FileType>5</FileType>
@@ -998,7 +993,7 @@
         </Group>
         <Group>
           <GroupName>user/task</GroupName>
-                    <Files>
+          <Files>
             <File>
               <FileName>imu_temp_ctrl.c</FileName>
               <FileType>1</FileType>
