@@ -1,0 +1,82 @@
+#!/bin/bash
+set -e
+
+export BASE_PATH=/project/$MICROROS_LIBRARY_FOLDER
+
+######## Init ########
+
+# 使用清华镜像源加速（解决国内访问 archive.ubuntu.com 超时问题）
+sed -i 's|http://archive.ubuntu.com/ubuntu|https://mirrors.tuna.tsinghua.edu.cn/ubuntu|g' /etc/apt/sources.list
+sed -i 's|http://security.ubuntu.com/ubuntu|https://mirrors.tuna.tsinghua.edu.cn/ubuntu|g' /etc/apt/sources.list
+
+apt-get update
+apt-get install -y gcc-arm-none-eabi
+
+cd /uros_ws
+
+source /opt/ros/$ROS_DISTRO/setup.bash
+source install/local_setup.bash
+
+ros2 run micro_ros_setup create_firmware_ws.sh generate_lib
+
+######## Adding extra packages ########
+pushd firmware/mcu_ws > /dev/null
+
+    # Workaround: Copy just tf2_msgs
+    git clone -b humble https://github.com/ros2/geometry2
+    cp -R geometry2/tf2_msgs ros2/tf2_msgs
+    rm -rf geometry2
+
+    # Import user defined extra packages
+    mkdir -p extra_packages
+    pushd extra_packages > /dev/null
+        if [ -d "$BASE_PATH/library_generation/extra_packages" ]; then
+            cp -R $BASE_PATH/library_generation/extra_packages/* .
+        fi
+        if [ -f extra_packages.repos ]; then
+            vcs import --input extra_packages.repos
+        fi
+    popd > /dev/null
+
+popd > /dev/null
+
+######## Build ########
+export TOOLCHAIN_PREFIX=/usr/bin/arm-none-eabi-
+
+ros2 run micro_ros_setup build_firmware.sh \
+    $BASE_PATH/library_generation/toolchain.cmake \
+    $BASE_PATH/library_generation/colcon.meta
+
+######## Copy output ########
+find firmware/build/include/ -name "*.c" -delete
+rm -rf $BASE_PATH/libmicroros
+mkdir -p $BASE_PATH/libmicroros/microros_include
+cp -R firmware/build/include/* $BASE_PATH/libmicroros/microros_include/
+cp -R firmware/build/libmicroros.a $BASE_PATH/libmicroros/libmicroros.a
+
+######## Fix include paths ########
+pushd firmware/mcu_ws > /dev/null
+    INCLUDE_ROS2_PACKAGES=$(colcon list | awk '{print $1}' | awk -v d=" " '{s=(NR==1?s:s d)$0}END{print s}')
+popd > /dev/null
+
+for var in ${INCLUDE_ROS2_PACKAGES}; do
+    if [ -d "$BASE_PATH/libmicroros/microros_include/${var}/${var}" ]; then
+        rsync -r $BASE_PATH/libmicroros/microros_include/${var}/${var}/* $BASE_PATH/libmicroros/microros_include/${var}
+        rm -rf $BASE_PATH/libmicroros/microros_include/${var}/${var}
+    fi
+done
+
+######## Generate extra files ########
+find firmware/mcu_ws/ros2 \( -name "*.srv" -o -name "*.msg" -o -name "*.action" \) | awk -F"/" '{print $(NF-2)"/"$NF}' > $BASE_PATH/libmicroros/available_ros2_types
+find firmware/mcu_ws/extra_packages \( -name "*.srv" -o -name "*.msg" -o -name "*.action" \) | awk -F"/" '{print $(NF-2)"/"$NF}' >> $BASE_PATH/libmicroros/available_ros2_types
+
+cd firmware
+echo "" > $BASE_PATH/libmicroros/built_packages
+for f in $(find $(pwd) -name .git -type d); do
+    pushd $f > /dev/null
+    echo "$(git config --get remote.origin.url) $(git rev-parse HEAD)" >> $BASE_PATH/libmicroros/built_packages
+    popd > /dev/null
+done
+
+######## Fix permissions ########
+sudo chmod -R 777 $BASE_PATH/libmicroros/

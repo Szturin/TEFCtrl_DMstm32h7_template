@@ -1,0 +1,31 @@
+#include "main.h"
+#include "memorymap.h"
+#include "usart.h"
+#include "gpio.h"
+#include "bsp_system.h"
+void SystemClock_Config(void);
+
+Uart_Instance uart_log(&huart7,true);
+
+float a = 1.1f;
+float t = 0;
+int main(void)
+{
+
+
+    HAL_Init();
+    SystemClock_Config();
+    MX_GPIO_Init();
+    MX_UART7_Init();
+
+    char c = 'c';
+    uart_log.init();
+
+    while (1)
+    {
+        t+= 0.001f;
+        a = sin(t);
+        uart_log.printf("%.2f\r\n",a);
+
+    }
+}
