@@ -65,7 +65,8 @@
   */
 
 /* USER CODE BEGIN EXPORTED_TYPES */
-
+// USB CDC 接收回调函数类型
+typedef void (*CDC_RxCallback_t)(uint8_t *buf, uint32_t len);
 /* USER CODE END EXPORTED_TYPES */
 
 /**
@@ -110,6 +111,8 @@ uint8_t CDC_Transmit_HS(uint8_t* Buf, uint16_t Len);
 
 /* USER CODE BEGIN EXPORTED_FUNCTIONS */
 void usb_printf(const char *fmt, ...);
+// 注册 USB CDC 接收回调（VOFA+ 调参等）
+void CDC_RegisterRxCallback(CDC_RxCallback_t cb);
 /* USER CODE END EXPORTED_FUNCTIONS */
 
 /**

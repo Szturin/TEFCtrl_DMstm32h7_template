@@ -1,6 +1,10 @@
 #ifndef DAEMON_H
 #define DAEMON_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "stdint.h"
 #include "string.h"
 
@@ -49,5 +53,9 @@ uint8_t DaemonIsOnline(DaemonInstance *instance);
  *        在 rtt_app_threads_init() 中调用一次即可，无需再手动调用 DaemonTask。
  */
 void DaemonStart(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // !DAEMON_H

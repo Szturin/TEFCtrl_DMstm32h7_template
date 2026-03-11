@@ -37,5 +37,5 @@
 #include "bsp/usart/bsp_usart.h"
 #include "task/simple_os/scheduler.h"
 #include "task/motor_task.h"
-#include "task/uart_task.h"
+#include "task/usart/usart_task.h"  /* 2026-03-11 迁移：uart_task → usart_task */
 #endif

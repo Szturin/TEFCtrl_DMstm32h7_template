@@ -12,10 +12,12 @@
 #include "bsp/usart/bsp_usart.h"
 #include "bsp/can/bsp_fdcan.h"
 #include "task/motor_task.h"
-#include "task/uart_task.h"
+#include "task/usart/usart_task.h"
 #include "modules/daemon/daemon.h"
-#include "task/micro_ros_task.h"
+#include "task/micro_ros/micro_ros_task.h"
 #include "usbd_cdc_if.h"
+#include "modules/vofa+/vofa.h"
+#include "modules/algorithm/controller/pid_tune.h"
 
 // --- 全局对象 ---
 
@@ -35,32 +37,47 @@ Uart_Instance uart_log(&huart7, true);
 static void motor_thread_entry(void *param){
     (void)param;
     motor_task_init();
-    uint32_t cnt = 0;
+    shoot_task_init();
     while (1) {
-        motor_task_proc();
-        if (++cnt % 200 == 0)  /* 每 200*5ms=1s 打印一次 */
-            usb_printf("[motor] tick=%lu\r\n", rt_tick_get());
-        rt_thread_mdelay(5);
+        motor_task_proc();   // DM 电机
+        shoot_task_proc();   // DJI 电机速度环（1ms）
+        rt_thread_mdelay(1); // 1ms 底层电机周期
+    }
+}
+
+static void unitree_thread_entry(void *param){
+    (void)param;
+    unitree_task_init();
+    while (1) {
+        unitree_task_proc();
+        rt_thread_mdelay(2); // 2ms 周期 (~500Hz)
     }
 }
 
 static void uart_thread_entry(void *param){
     (void)param;
     while (1) {
-        UartTask();
+        usart_task_proc();
         rt_thread_mdelay(5);
     }
 }
 
-static void shoot_thread_entry(void *param){
+static void robot_thread_entry(void *param){
     (void)param;
-    shoot_task_init();
+    Robot_Init();
     while (1) {
-        shoot_task_proc();
-        rt_thread_mdelay(5);
+
+        rt_thread_mdelay(2);
     }
 }
 
+static void chassis_thread_entry(void *param){
+    (void)param;
+    while (1) {
+        Chassis_Task();
+        rt_thread_mdelay(2);
+    }
+}
 // --- BSP 初始化（rtthread_startup 之前调用） ---
 
 void app_main_init(void){
@@ -83,9 +100,17 @@ void app_main_init(void){
 extern "C" void rtt_app_threads_init(void){
     DaemonStart();
 
-    THREAD_START("motor",  motor_thread_entry,  2048, 10);
+    // VOFA+ 初始化：接收 USB 命令 → pid_tune 解析
+    vofa_init();
+    vofa_register_cmd_handler([](const char *cmd) {
+        PID_UpdateFromCommand(&PID_Test, cmd);
+    });
+
+    THREAD_START("motor",  motor_thread_entry,  2048, 10);  // 1ms，最高优先级
+    THREAD_START("unitree", unitree_thread_entry, 2048, 11); // 2ms，宇树电机
     THREAD_START("uart",   uart_thread_entry,   2048, 12);
-    THREAD_START("shoot",  shoot_thread_entry,  2048, 11);
+    THREAD_START("robot",   robot_thread_entry,   2048, 12);
+    THREAD_START("chassis",  chassis_thread_entry,   2048, 12);
 #ifdef MICRO_ROS_ENABLED
     THREAD_START("microros", micro_ros_thread_entry, 8192, 15);
 #endif

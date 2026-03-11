@@ -20,7 +20,7 @@ project(CtrBoard-H7_ALL C CXX ASM)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 11)
 
-# --- [关键修复：开启 H7 硬件浮点支持] ---
+# ---开启 H7 硬件浮点支持 ---
 # STM32H723 使用的是双精度 FPU (fpv5-d16) 或单精度 (fpv5-sp-d16)
 # 这里使用通用的 cortex-m7 配置
 add_compile_options(-mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16 -mfloat-abi=hard)
@@ -45,7 +45,7 @@ else ()
     add_compile_options(-Og -g)
 endif ()
 
-# --- [关键修复：宏定义] ---
+# 宏定义
 # 1. 增加 ARM_MATH_CM7 用于支持 DSP 库
 # 2. 增加 __FPU_PRESENT=1 确保开启浮点加速
 add_definitions(
@@ -58,7 +58,6 @@ add_definitions(
         -DARM_MATH_ROUNDING
 )
 
-# --- [关键修复：头文件路径搜索] ---
 # 注意：如果 bsp_dwt.h 在 Application/bsp/dwt 这样的子目录下，你需要继续追加
 include_directories(
         Core/Inc
@@ -84,6 +83,7 @@ include_directories(
 )
 
 # 确保包含所有源文件（包括启动汇编文件）
+# 注：GLOB_RECURSE 已支持递归，但明确列出子目录以确保不遗漏
 file(GLOB_RECURSE SOURCES
         "Core/*.c"
         "Core/*.cpp"
@@ -91,6 +91,14 @@ file(GLOB_RECURSE SOURCES
         "Drivers/*.c"
         "application/*.c"
         "application/*.cpp"
+        "application/bsp/*.c"
+        "application/bsp/*.cpp"
+        "application/modules/*.c"
+        "application/modules/*.cpp"
+        "application/task/*.c"
+        "application/task/*.cpp"
+        "application/task/*/*.c"        # task 子系统文件夹（chassis/gimbal/shoot/usart/micro_ros）
+        "application/task/*/*.cpp"
         "USB_DEVICE/*.c"
 )
 
@@ -119,6 +127,7 @@ list(REMOVE_ITEM RT_THREAD_SOURCES
     "${CMAKE_SOURCE_DIR}/Middlewares/Third_Party/RealThread_RTOS_RT-Thread/src/scheduler_mp.c"
     "${CMAKE_SOURCE_DIR}/Middlewares/Third_Party/RealThread_RTOS_RT-Thread/src/cpu.c"
 )
+
 list(APPEND SOURCES ${RT_THREAD_SOURCES})
 
 # RT-Thread libcpu GCC 上下文切换汇编（必须显式添加，GLOB_RECURSE *.c 不含 .S）

@@ -55,8 +55,9 @@
 │   │   ├── general_def.h          # 全局常量（PI / RPM 换算 / 电机参数）
 │   │   ├── motor/
 │   │   │   ├── dm_motor/          # 达妙电机（MIT / 位置 / 速度模式）
-│   │   │   └── dji_motor/         # 大疆电机（M2006 / M3508 / GM6020）
-│   │   │       └── snail_c615     # Snail C615 ESC（TIM PWM）
+│   │   │   ├── dji_motor/         # 大疆电机（M2006 / M3508 / GM6020）
+│   │   │   ├── unitree_motor/     # 宇树电机（GO-M8010-6 / A1，RS485 4Mbps）
+│   │   │   └── snail_motor/       # Snail 无刷电机（PWM）
 │   │   ├── algorithm/
 │   │   │   ├── controller/        # PID 控制器（位置式 + 增量式）
 │   │   │   │   ├── pid.h/c        # 核心实现（微分先行/滤波/前馈/抗饱和）
@@ -103,9 +104,9 @@ startup.s (bl entry)
 
 | 线程名 | 优先级 | 堆栈 | 周期 | 功能 |
 |--------|--------|------|------|------|
-| `motor` | 10 | 1KB | 5ms | DM 电机位置控制 + DJI 电机 |
-| `shoot` | 11 | 1KB | 5ms | M2006 拨蛋 + Snail C615 发射 |
-| `uart` | 12 | 1KB | 5ms | 遥控器 UART 接收 |
+| `motor` | 10 | 2KB | 1ms | DM 电机 + DJI M2006 速度闭环 |
+| `unitree` | 11 | 2KB | 2ms | 宇树 GO-M8010-6 / A1 RS485 通信 |
+| `uart` | 12 | 2KB | 5ms | 遥控器 UART 接收 |
 | `microros` | 15 | 8KB | - | micro-ROS 通信（条件编译） |
 
 ## 开发环境
@@ -206,13 +207,19 @@ topic_peek(&chassis_cmd, &cmd);
 
 ### 达妙（DM）电机（`motor/dm_motor/`）
 
-- 控制模式：MIT 力矩、位置、速度
+- 控制模式：MIT 力矩、位置、速度、混合
 - 通信：FDCAN @ 1Mbps
 
 ### 大疆（DJI）电机（`motor/dji_motor/`）
 
 - 支持：M2006、M3508、GM6020、Snail C615（PWM）
 - 分组：0x200（1-4）、0x1FF（5-8）、0x2FF（GM6020 5-7）
+
+### 宇树（Unitree）电机（`motor/unitree_motor/`）
+
+- 支持：GO-M8010-6（轮毂电机）、A1（关节电机）
+- 通信：RS485 半双工 (USART3, 4Mbps, DE 硬件自动控制)
+- 协议：GO 帧 17TX/16RX (CRC-CCITT-16)、A1 帧 34TX/78RX (CRC32)
 
 ### BMI088 IMU
 
@@ -237,7 +244,8 @@ RT-Thread v5.0.2 已完整移植并启用，配置文件位于 `Middlewares/.../
 | `RT_TICK_PER_SECOND` | 1000 | 1ms tick |
 | `RT_USING_HEAP` | 启用 | 动态内存分配 |
 | `RT_USING_SMALL_MEM` | 启用 | 小内存管理算法 |
-| `RT_HEAP_SIZE` | 1024 (uint32_t) | 默认 4KB 堆 |
+| `RT_HEAP_SIZE` | 16384 (uint32_t) | 64KB 堆（已从默认 4KB 增大） |
+| `RT_USING_SMALL_MEM_AS_HEAP` | 启用 | RT-Thread 5.x 必需 |
 | `RT_USING_FINSH` | 启用 | FinSH 命令行 |
 | `RT_CONSOLE_DEVICE_NAME` | "uart1" | 日志输出串口 |
 | `RT_USING_CACHE` | 启用 | ICache/DCache 管理 |

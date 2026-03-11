@@ -32,7 +32,7 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-
+static CDC_RxCallback_t cdc_rx_callback = NULL;
 /* USER CODE END PV */
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
@@ -265,6 +265,10 @@ static int8_t CDC_Control_HS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
 static int8_t CDC_Receive_HS(uint8_t* Buf, uint32_t *Len)
 {
   /* USER CODE BEGIN 11 */
+  // 分发到已注册的回调（VOFA+ 调参等）
+  if (cdc_rx_callback && *Len > 0) {
+      cdc_rx_callback(Buf, *Len);
+  }
   USBD_CDC_SetRxBuffer(&hUsbDeviceHS, &Buf[0]);
   USBD_CDC_ReceivePacket(&hUsbDeviceHS);
   return (USBD_OK);
@@ -317,9 +321,18 @@ static int8_t CDC_TransmitCplt_HS(uint8_t *Buf, uint32_t *Len, uint8_t epnum)
 
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_IMPLEMENTATION */
 
+void CDC_RegisterRxCallback(CDC_RxCallback_t cb)
+{
+    cdc_rx_callback = cb;
+}
+
 void usb_printf(const char *fmt, ...)
 {
     static char buf[256];
+    // 先检查 USB 是否忙，避免格式化白费时间
+    USBD_CDC_HandleTypeDef *hcdc = (USBD_CDC_HandleTypeDef*)hUsbDeviceHS.pClassData;
+    if (!hcdc || hcdc->TxState != 0) return;
+
     va_list args;
     va_start(args, fmt);
     int len = vsnprintf(buf, sizeof(buf), fmt, args);

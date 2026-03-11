@@ -1,7 +1,6 @@
 #include "app_link.h"
 #include "remoter_uart.h"
 
-/*全局变量 warning ！！！*/
 wbus_rc_info_t wbus_rc;
 
 void remote_filter(int16_t *data, int16_t new_data, float filter_a){
