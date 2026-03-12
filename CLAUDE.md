@@ -4,6 +4,8 @@
 
 | 日期 | 描述 |
 |------|------|
+| 2026-03-13 | 功率控制增强：RLS 自适应标定 k1/k2 + 功率计偏移修正，参数固定后 RLS 默认关闭 |
+| 2026-03-13 | 封装功率控制为独立子模块 + 功率计驱动 |
 | 2026-03-11 | 初始化架构分析：全仓扫描，生成完整模块索引、架构图、线程分配表 |
 
 ---
@@ -145,7 +147,7 @@ graph TD
 | `application/modules/vofa+/` | C++ | VOFA+ JustFloat 协议（USB CDC 调试输出） |
 | `application/modules/ringbuffer/` | C | 环形缓冲区 |
 | `application/task/chassis/` | C++ | 麦克纳姆轮底盘控制（遥控器→运动学→PID→功率限制→电机） |
-| `application/task/chassis/chassis_power` | C++ | 功率控制子模块（模型前馈估算 + 大P分配 + 负功率处理） |
+| `application/task/chassis/chassis_power` | C++ | 功率控制子模块（模型前馈 + 大P分配 + RLS 自适应标定，k1=0.001067/k2=1.187571） |
 | `application/modules/powermeter/` | C | 功率计驱动（FDCAN CAN ID 0x212） |
 | `application/task/` | C++ | 所有 RT-Thread 业务线程入口 |
 | `Core/` | C | CubeMX 生成的外设初始化 + HAL 配置 |
