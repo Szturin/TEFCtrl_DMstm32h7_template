@@ -72,6 +72,10 @@ tmpclaude*
 
 # 调试文件
 *.dblite
+*.csv
+
+# 误入的 Windows 路径（含 Unicode 全角字符）
+*claude-plugins-official*
 
 # 文档生成文件（如果使用 Doxygen）
 html/
