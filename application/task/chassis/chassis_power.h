@@ -43,6 +43,12 @@ float chassis_power_get_limit(void);
 /** 获取功率限制使能状态 */
 int chassis_power_is_enabled(void);
 
+/** 获取 RLS 自适应后的 k1 (摩擦损耗系数) */
+float chassis_power_get_k1(void);
+
+/** 获取 RLS 自适应后的 k2 (铜损系数) */
+float chassis_power_get_k2(void);
+
 /**
  * @brief 解析功率相关 VOFA+ 命令
  * @return 1=已处理, 0=不是功率命令

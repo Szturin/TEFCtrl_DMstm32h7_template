@@ -204,6 +204,8 @@ void chassis_task_proc(void) {
             chassis_power_get_estimated(),  // CH0: 模型估算功率 (W)
             chassis_power_get_measured(),   // CH1: 功率计实测功率 (W)
             chassis_power_get_limit(),      // CH2: 功率上限参考线 (W)
+            chassis_power_get_k1(),         // CH3: RLS k1 (摩擦损耗)
+            chassis_power_get_k2(),         // CH4: RLS k2 (铜损)
         };
         vofa_justfloat_send(vofa_data, sizeof(vofa_data) / sizeof(vofa_data[0]));
     }
